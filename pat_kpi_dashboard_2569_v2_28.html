@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>กทท. KPI Progress – MOU 2569</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg:       #f0f2f5;
+    --bg2:      #e8eaee;
+    --card:     #ffffff;
+    --border:   #dde1e8;
+    --text:     #1a2335;
+    --text2:    #3d4a5e;
+    --text3:    #7a8499;
+    --accent:   #1a3a5c;
+    --accent2:  #1e5799;
+    --gold:     #c8962a;
+    --lv1:      #c0392b;
+    --lv2:      #e74c3c;
+    --lv3:      #e8a800;
+    --lv4:      #95c97a;
+    --lv5:      #1a6b3a;
+    --lv-none:  #c8cdd8;
+    --shadow:   0 2px 10px rgba(26,35,53,0.08);
+    --radius:   10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Sarabun','IBM Plex Sans Thai',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
+
+  /* HEADER */
+  .top-header{display:flex;align-items:center;justify-content:space-between;background:var(--accent);color:#fff;padding:0 20px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.25)}
+  .logo-area{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+  .logo-icon{width:32px;height:32px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .logo-icon span{color:var(--accent);font-weight:800;font-size:10px;line-height:1;text-align:center}
+  .mou-badge{background:var(--gold);color:#fff;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
+  .tabs{display:flex;gap:4px}
+  .tab-btn{background:rgba(255,255,255,0.15);border:none;color:rgba(255,255,255,0.75);padding:6px 16px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;transition:all 0.2s}
+  .tab-btn.active{background:rgba(255,255,255,0.28);color:#fff;font-weight:700}
+  .tab-btn:hover:not(.active){background:rgba(255,255,255,0.2);color:#fff}
+  .date-display{font-size:12px;color:rgba(255,255,255,0.7)}
+
+  /* LAYOUT */
+  .layout{display:flex;height:calc(100vh - 48px);overflow:hidden}
+
+  /* SIDEBAR */
+  .sidebar{width:224px;min-width:224px;background:var(--card);border-right:1px solid var(--border);overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:14px}
+  .sidebar-section h4{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px}
+  .period-badge{background:var(--accent);color:#fff;border-radius:8px;padding:8px 10px;font-size:11px;font-weight:600}
+  .period-badge .p-period{font-size:13px;font-weight:800;margin-top:2px}
+  select.filter-sel{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);font-family:inherit;font-size:12px;color:var(--text);cursor:pointer;outline:none;margin-bottom:6px}
+  select.filter-sel:focus{border-color:var(--accent2)}
+  .legend-items{display:flex;flex-direction:column;gap:4px}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:12px;padding:3px 6px;border-radius:5px}
+  .legend-dot{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+  .kpi-mini-list{display:flex;flex-direction:column;gap:5px}
+  .kpi-mini{background:var(--bg2);border-radius:7px;padding:7px 9px}
+  .kpi-mini-label{font-size:10px;color:var(--text3);font-weight:600}
+  .kpi-mini-vals{display:flex;justify-content:space-between;align-items:baseline;margin-top:2px}
+  .kpi-mini-actual{font-size:15px;font-weight:800}
+  .kpi-mini-target{font-size:10px;color:var(--text3)}
+  .kpi-mini-bar{height:4px;border-radius:2px;background:var(--border);margin-top:4px;overflow:hidden}
+  .kpi-mini-fill{height:100%;border-radius:2px}
+
+  /* MAIN */
+  .main{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+  .tab-content{display:none;flex-direction:column;gap:12px}
+  .tab-content.active{display:flex}
+
+  /* SCORE CARDS */
+  .score-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .score-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden}
+  .score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+  .score-card.c-total::before{background:var(--accent2)}
+  .score-card.c-std::before{background:var(--lv3)}
+  .score-card.c-tgt::before{background:#888}
+  .score-card.c-h1::before{background:var(--lv4)}
+  .score-card.c-h2::before{background:#9b59b6}
+  .sc-label{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
+  .sc-val{font-size:26px;font-weight:800;margin-top:4px;line-height:1}
+  .sc-sub{font-size:10px;color:var(--text3);margin-top:2px}
+  .sc-bar{height:5px;background:var(--border);border-radius:3px;margin-top:8px;overflow:hidden}
+  .sc-bar-fill{height:100%;border-radius:3px}
+  .c-total .sc-val{color:var(--accent2)}
+  .c-std .sc-val{color:var(--lv3)}
+  .c-tgt .sc-val{color:#555}
+  .c-h1 .sc-val{color:#1e8c4a}
+  .c-h2 .sc-val{color:#7d3c98}
+
+  /* MID ROW */
+  .mid-row{display:grid;grid-template-columns:170px 1fr;gap:12px}
+
+  /* BREAKDOWN BOX */
+  .breakdown-box{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .breakdown-box h3{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:10px}
+  .breakdown-list{display:flex;flex-direction:column;gap:5px}
+  .breakdown-row{display:flex;align-items:center;gap:8px}
+  .bk-swatch{width:22px;height:22px;border-radius:5px;flex-shrink:0}
+  .bk-count{font-size:14px;font-weight:700;line-height:1}
+  .bk-label{display:none}
+
+  /* HEATMAP */
+  .heatmap-box{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid var(--border);overflow-x:auto}
+  .heatmap-title-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .heatmap-title-row h3{font-size:13px;font-weight:700;color:var(--text)}
+  .heatmap-note{font-size:11px;color:var(--text3)}
+  .hm-cell{border-radius:4px;height:22px;width:32px;cursor:pointer;transition:transform 0.12s,box-shadow 0.12s;flex-shrink:0}
+  .hm-cell:hover{transform:scale(1.15);z-index:5;box-shadow:0 2px 10px rgba(0,0,0,0.35)}
+  .hm-cell.dimmed{opacity:0.15;filter:grayscale(80%) brightness(1.1)}
+  .hm-cell.highlighted{outline:2px solid var(--accent2);outline-offset:1px}
+  .hm-legend{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+  .hm-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3)}
+  .hm-legend-dot{width:12px;height:12px;border-radius:3px}
+
+  /* POPUP */
+  .popup-overlay{position:fixed;inset:0;z-index:500;display:none}
+  .popup-overlay.open{display:block}
+  .popup-card{position:fixed;z-index:501;background:var(--card);border-radius:14px;box-shadow:0 8px 40px rgba(26,35,53,0.22);border:1px solid var(--border);width:340px;padding:0;overflow:hidden}
+  .popup-header{padding:14px 16px 10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start}
+  .popup-kpi-code{font-size:20px;font-weight:800;color:var(--accent)}
+  .popup-kpi-name{font-size:12px;color:var(--text3);margin-top:2px}
+  .popup-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);line-height:1;padding:0 4px}
+  .popup-close:hover{color:var(--text)}
+  .popup-period-badge{font-size:11px;font-weight:700;color:#fff;padding:2px 10px;border-radius:10px;align-self:flex-start}
+  .popup-body{padding:14px 16px}
+  .popup-result-row{display:flex;align-items:baseline;gap:6px;margin-bottom:10px}
+  .popup-val{font-size:28px;font-weight:800}
+  .popup-unit{font-size:13px;color:var(--text3)}
+  .popup-status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;color:#fff;margin-bottom:12px}
+  .popup-thresholds{margin-bottom:12px}
+  .popup-thresholds-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:6px}
+  .popup-thr-row{display:flex;gap:4px}
+  .popup-thr-chip{flex:1;text-align:center;padding:5px 2px;border-radius:6px;font-size:10px;font-weight:700;color:#fff;line-height:1.2}
+  .popup-thr-chip.active-chip{outline:2px solid var(--text);outline-offset:2px}
+  .popup-note{font-size:11px;color:var(--text2);background:var(--bg2);border-radius:8px;padding:8px 10px;line-height:1.5}
+
+  /* ANALYSIS BOX */
+  .analysis-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .analysis-box h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .analysis-items{display:flex;flex-direction:column;gap:6px}
+  .analysis-item{border-radius:8px;padding:8px 12px;border-left:4px solid transparent;background:var(--bg2)}
+  .analysis-item.lv5{border-left-color:var(--lv5)}
+  .analysis-item.lv4{border-left-color:var(--lv4)}
+  .analysis-item.lv3{border-left-color:var(--lv3)}
+  .analysis-item.lv2{border-left-color:var(--lv2)}
+  .analysis-item.lv1{border-left-color:var(--lv1)}
+  .analysis-item-header{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+  .analysis-text{font-size:12px;color:var(--text2);line-height:1.4}
+  .analysis-pills{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+  .analysis-pill{font-size:10px;background:var(--accent);color:#fff;padding:1px 7px;border-radius:10px;font-weight:600}
+
+  /* EXECUTIVE ANALYSIS */
+  .exec-analysis-box{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .exec-analysis-box h3{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px;border-bottom:2px solid var(--border);padding-bottom:8px}
+  .exec-para{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:10px}
+  .exec-para strong{color:var(--text)}
+  .exec-section-title{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;margin-top:12px;display:flex;align-items:center;gap:6px}
+  .exec-highlight-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+  .exec-chip{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;color:#fff}
+  .exec-risk-note{background:#fff5f5;border:1px solid #ffd5d5;border-radius:8px;padding:10px 14px;font-size:12px;color:#c0392b;line-height:1.6;margin-top:8px}
+
+  /* RISK */
+  .risk-box{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .risk-box h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px}
+  #risk-matrix-grid{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:3px;height:160px}
+  .r-cell{border-radius:4px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:2px;padding:2px}
+  .r-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.25);transition:transform 0.12s}
+  .r-dot:hover{transform:scale(1.25)}
+  .risk-legend{margin-top:8px;display:flex;flex-direction:column;gap:3px}
+  .risk-legend-item{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text2)}
+  .r-ld{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+  /* OVERVIEW TABLE */
+  .overview-table-wrap{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border);overflow-x:auto}
+  .overview-table-wrap h3{font-size:13px;font-weight:700;margin-bottom:10px}
+  table.kpi-table{width:100%;border-collapse:collapse;font-size:12px}
+  table.kpi-table th{background:var(--accent);color:#fff;padding:8px 10px;text-align:center;font-weight:600;font-size:11px}
+  table.kpi-table th:first-child{text-align:left}
+  table.kpi-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+  table.kpi-table tr.parent-row td{background:#eef2f8;font-weight:700;color:var(--accent)}
+  table.kpi-table tr.child-row td{background:var(--card)}
+  table.kpi-table tr.section-row td{background:#1e3a5c;color:#fff;font-weight:700;font-size:11px}
+  table.kpi-table tr:hover:not(.section-row) td{background:var(--bg2)}
+  .level-chip{display:inline-flex;align-items:center;justify-content:center;width:28px;height:22px;border-radius:5px;font-size:11px;font-weight:700;color:#fff}
+
+  /* ENTRY */
+  .entry-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  .entry-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .entry-card h4{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:6px}
+  .entry-field{margin-bottom:8px}
+  .entry-field label{font-size:11px;color:var(--text3);font-weight:600;display:block;margin-bottom:3px}
+  .entry-field input{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);font-family:inherit;font-size:13px;color:var(--text);outline:none}
+  .entry-field input:focus{border-color:var(--accent2)}
+  .entry-field textarea{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);font-family:inherit;font-size:12px;color:var(--text);outline:none;resize:vertical;min-height:60px}
+  .save-btn{background:var(--accent2);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;width:100%;margin-top:4px}
+  .save-btn:hover{background:var(--accent)}
+  .level-preview{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;margin-top:4px}
+
+  /* ALERTS */
+  .alert-list{display:flex;flex-direction:column;gap:8px}
+  .alert-card{background:var(--card);border-radius:var(--radius);padding:12px 16px;box-shadow:var(--shadow);border:1px solid var(--border);border-left:4px solid var(--lv1)}
+  .alert-card.warn{border-left-color:var(--lv2)}
+  .alert-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .alert-kpi{font-size:12px;font-weight:700;color:var(--accent)}
+  .alert-level{font-size:11px;font-weight:700;color:#fff;padding:2px 8px;border-radius:10px}
+  .alert-body{font-size:12px;color:var(--text2);line-height:1.5}
+  .gmail-btn{margin-top:8px;background:#ea4335;color:#fff;border:none;padding:5px 14px;border-radius:6px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer}
+
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- POPUP OVERLAY -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
+  <div class="popup-card" id="popupCard">
+    <div class="popup-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="popup-kpi-code" id="pp-code"></span>
+          <span class="popup-period-badge" id="pp-period-badge"></span>
+        </div>
+        <div class="popup-kpi-name" id="pp-name"></div>
+      </div>
+      <button class="popup-close" onclick="closePopupBtn()">✕</button>
+    </div>
+    <div class="popup-body">
+      <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">ผลการดำเนินงาน Q2</div>
+      <div class="popup-result-row">
+        <span class="popup-val" id="pp-val"></span>
+        <span class="popup-unit" id="pp-unit"></span>
+      </div>
+      <div class="popup-status-badge" id="pp-status-badge"></div>
+      <div class="popup-thresholds">
+        <div class="popup-thresholds-title">ค่าเกณฑ์วัด</div>
+        <div class="popup-thr-row" id="pp-thr-row"></div>
+        <div id="pp-thr-legend" style="display:flex;gap:10px;margin-top:6px;font-size:10px;color:var(--text3)"></div>
+      </div>
+      <div class="popup-note" id="pp-note"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP HEADER -->
+<div class="top-header">
+  <div class="logo-area">
+    <div class="logo-icon"><span>PAT</span></div>
+    <span class="mou-badge">MOU 2569</span>
+    <span style="font-size:16px;font-weight:600">KPI Progress</span>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('exec',this)">Executive Summary</button>
+    <button class="tab-btn" onclick="switchTab('overview',this)">ภาพรวม</button>
+    <button class="tab-btn" onclick="switchTab('entry',this)">กรอกข้อมูล</button>
+    <button class="tab-btn" onclick="switchTab('alerts',this)">แจ้งเตือน</button>
+  </div>
+  <div class="date-display">📅 Date Updated: 31 มีนาคม 2569</div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+<div class="sidebar">
+
+  <div class="sidebar-section">
+    <div class="period-badge">
+      <div style="font-size:10px;opacity:0.8">ไตรมาส 2-2 – ยังไม่ถึงสิ้นปี</div>
+      <div class="p-period">ไตรมาส 2-2 / 2569</div>
+      <div style="font-size:10px;opacity:0.7;margin-top:1px">ต.ค. 2568 – ก.ย. 2569</div>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <h4>ตัวกรอง Heatmap</h4>
+    <label style="font-size:11px;color:var(--text3);font-weight:600;display:block;margin-bottom:4px">ผู้รับผิดชอบหลัก</label>
+    <select class="filter-sel" id="filterPerson" onchange="applyFilter()">
+      <option value="all">— ทั้งหมด —</option>
+      <option value="อ.ทลฉ.">อ.ทลฉ.</option>
+      <option value="รอง อ.ทลฉ.">รอง อ.ทลฉ.</option>
+      <option value="ผช.อ.ทลฉ.">ผช.อ.ทลฉ.</option>
+      <option value="อ.ทกท.">อ.ทกท.</option>
+      <option value="รอง อ.ทกท.">รอง อ.ทกท.</option>
+      <option value="รอง อทร.(กง)">รอง อทร.(กง)</option>
+      <option value="ผช. อทร.(กง)">ผช. อทร.(กง)</option>
+      <option value="อฝง.">อฝง.</option>
+      <option value="อฝก.">อฝก.</option>
+      <option value="อฝบ.">อฝบ.</option>
+      <option value="กพบ.">กพบ.</option>
+      <option value="รอง อทร.(บธ)">รอง อทร.(บธ)</option>
+      <option value="ผช. อทร.(บธ)">ผช. อทร.(บธ)</option>
+      <option value="อสทภ.">อสทภ.</option>
+      <option value="อสปก.">อสปก.</option>
+      <option value="อกผง.">อกผง.</option>
+      <option value="อฝพต.">อฝพต.</option>
+      <option value="อฝส.">อฝส.</option>
+      <option value="อฝบส.">อฝบส.</option>
+    </select>
+    <label style="font-size:11px;color:var(--text3);font-weight:600;display:block;margin-bottom:4px">หน่วยงาน</label>
+    <select class="filter-sel" id="filterUnit" onchange="applyFilter()">
+      <option value="all">— ทั้งหมด —</option>
+      <option value="กทท">กทท. (ส่วนกลาง)</option>
+      <option value="ทกท">ทกท. (ท่าเรือกรุงเทพ)</option>
+      <option value="ทลฉ">ทลฉ. (ท่าเรือแหลมฉบัง)</option>
+      <option value="ทรน">ทรน. (ท่าเรือระนอง)</option>
+    </select>
+  </div>
+
+  <div class="sidebar-section">
+    <h4>ระดับคะแนน</h4>
+    <div class="legend-items">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--lv5)"></div><span>ระดับ 5 – ดีเลิศ</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--lv4)"></div><span>ระดับ 4 – ดี</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--lv3)"></div><span>ระดับ 3 – ปานกลาง</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--lv2)"></div><span>ระดับ 2 – ต้องปรับปรุง</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--lv1)"></div><span>ระดับ 1 – วิกฤต</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--lv-none)"></div><span>ยังไม่มีข้อมูล</span></div>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <h4>ค่าสำคัญ Q2 สะสม</h4>
+    <div class="kpi-mini-list">
+      <div class="kpi-mini">
+        <div class="kpi-mini-label">กำไรสุทธิ กทท.</div>
+        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv3)">3,545</span><span class="kpi-mini-target">/ 7,290 MB</span></div>
+        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:48.6%;background:var(--lv3)"></div></div>
+      </div>
+      <div class="kpi-mini">
+        <div class="kpi-mini-label">กำไรสุทธิ ทกท.</div>
+        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv3)">670</span><span class="kpi-mini-target">/ 1,332 MB</span></div>
+        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:50.3%;background:var(--lv3)"></div></div>
+      </div>
+      <div class="kpi-mini">
+        <div class="kpi-mini-label">รายได้ ทรน.</div>
+        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv2)">28.0</span><span class="kpi-mini-target">/ 40 MB</span></div>
+        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:66.7%;background:var(--lv2)"></div></div>
+      </div>
+      <div class="kpi-mini">
+        <div class="kpi-mini-label">ตู้สินค้า ทลฉ.</div>
+        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv2)">5.44</span><span class="kpi-mini-target">/ 9.55M TEU</span></div>
+        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:57%;background:var(--lv2)"></div></div>
+      </div>
+      <div class="kpi-mini">
+        <div class="kpi-mini-label">บริหารสินทรัพย์</div>
+        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv2)">639</span><span class="kpi-mini-target">/ 1,900 MB</span></div>
+        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:33.6%;background:var(--lv2)"></div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end sidebar -->
+
+<div class="main">
+
+  <!-- ══ EXECUTIVE SUMMARY TAB ══ -->
+  <div class="tab-content active" id="tab-exec">
+
+    <!-- SCORE CARDS -->
+    <div class="score-cards">
+      <div class="score-card c-total">
+        <div class="sc-label">คะแนนรวม (Q2)</div>
+        <div class="sc-val">1.1222</div>
+        <div class="sc-sub">จากคะแนนเต็ม 5.0000</div>
+        <div class="sc-bar"><div class="sc-bar-fill" style="width:22.4%;background:var(--lv2)"></div></div>
+      </div>
+      <div class="score-card c-std">
+        <div class="sc-label">หมวดรวมมาตรฐาน</div>
+        <div class="sc-val">3.5673</div>
+        <div class="sc-sub">จากคะแนนเต็ม 5.0000</div>
+        <div class="sc-bar"><div class="sc-bar-fill" style="width:71.3%;background:var(--lv3)"></div></div>
+      </div>
+      <div class="score-card c-tgt">
+        <div class="sc-label">เป้าหมาย (คาดการณ์)</div>
+        <div class="sc-val">3.8321</div>
+        <div class="sc-sub">คาดการณ์ / 5.0000</div>
+        <div class="sc-bar"><div class="sc-bar-fill" style="width:76.6%;background:#aaa"></div></div>
+      </div>
+      <div class="score-card c-h1">
+        <div class="sc-label">หมวด 1 ยุทธศาสตร์</div>
+        <div class="sc-val">4.8949</div>
+        <div class="sc-sub">คาดการณ์ / 5.0000</div>
+        <div class="sc-bar"><div class="sc-bar-fill" style="width:97.9%;background:var(--lv5)"></div></div>
+      </div>
+      <div class="score-card c-h2">
+        <div class="sc-label">หมวด 2 รัฐวิสาหกิจ</div>
+        <div class="sc-val">3.4778</div>
+        <div class="sc-sub">คาดการณ์ / 5.0000</div>
+        <div class="sc-bar"><div class="sc-bar-fill" style="width:69.6%;background:#9b59b6"></div></div>
+      </div>
+    </div>
+
+    <!-- MID ROW: BREAKDOWN + HEATMAP -->
+    <div class="mid-row">
+
+      <!-- BREAKDOWN -->
+      <div class="breakdown-box">
+        <h3>สรุปคะแนนรายตัวชี้วัด</h3>
+        <div class="breakdown-list" id="breakdown-list"></div>
+      </div>
+
+      <!-- HEATMAP -->
+      <div class="heatmap-box">
+        <div class="heatmap-title-row">
+          <h3>HEATMAP แสดงการดำเนินงานรายตัวชี้วัด</h3>
+          <span class="heatmap-note">คลิกเซลล์เพื่อดูรายละเอียด</span>
+        </div>
+        <div id="heatmap-container"></div>
+        <div class="hm-legend">
+          <div class="hm-legend-item"><div class="hm-legend-dot" style="background:var(--lv1)"></div>Level 1</div>
+          <div class="hm-legend-item"><div class="hm-legend-dot" style="background:var(--lv2)"></div>Level 2</div>
+          <div class="hm-legend-item"><div class="hm-legend-dot" style="background:var(--lv3)"></div>Level 3</div>
+          <div class="hm-legend-item"><div class="hm-legend-dot" style="background:var(--lv4)"></div>Level 4</div>
+          <div class="hm-legend-item"><div class="hm-legend-dot" style="background:var(--lv5)"></div>Level 5</div>
+          <div class="hm-legend-item"><div class="hm-legend-dot" style="background:var(--lv-none)"></div>ยังไม่มีข้อมูล</div>
+        </div>
+      </div>
+
+    </div><!-- end mid-row -->
+
+    <!-- BOTTOM ROW: ANALYSIS + RISK -->
+    <div style="display:grid;grid-template-columns:1fr 310px;gap:12px">
+      <div class="analysis-box">
+        <h3>🔍 อธิบายประเด็นตัวชี้วัดหลัก</h3>
+        <div class="analysis-items" id="analysis-container"></div>
+      </div>
+      <div class="risk-box">
+        <h3>⚠️ Risk Management Matrix</h3>
+        <div style="display:flex;gap:6px">
+          <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:9px;color:var(--text3);text-align:center;align-self:center">โอกาสเกิด (LIKELIHOOD) →</div>
+          <div style="flex:1">
+            <div style="text-align:right;font-size:9px;color:var(--text3);margin-bottom:2px">ผลกระทบ (IMPACT) →</div>
+            <div id="risk-matrix-grid"></div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);margin-top:2px">
+              <div style="text-align:center;font-size:8px;color:var(--text3)">น้อย</div>
+              <div style="text-align:center;font-size:8px;color:var(--text3)">ต่ำ</div>
+              <div style="text-align:center;font-size:8px;color:var(--text3)">ปานกลาง</div>
+              <div style="text-align:center;font-size:8px;color:var(--text3)">สูง</div>
+              <div style="text-align:center;font-size:8px;color:var(--text3)">สูงมาก</div>
+            </div>
+          </div>
+        </div>
+        <div class="risk-legend" id="risk-legend"></div>
+      </div>
+    </div>
+
+    <!-- EXECUTIVE ANALYSIS (bottom) -->
+    <div class="exec-analysis-box" id="exec-analysis-box">
+      <h3>📋 บทวิเคราะห์ผู้บริหาร – ผลการดำเนินงานรายครึ่งปี ปีบัญชี 2569</h3>
+      <div id="exec-analysis-content"></div>
+    </div>
+
+  </div><!-- end tab-exec -->
+
+  <!-- ══ OVERVIEW TAB ══ -->
+  <div class="tab-content" id="tab-overview">
+    <div class="overview-table-wrap">
+      <h3>ตารางภาพรวมผลการดำเนินงาน KPI ปีบัญชี 2569</h3>
+      <table class="kpi-table" id="overview-table"></table>
+    </div>
+  </div>
+
+  <!-- ══ ENTRY TAB ══ -->
+  <div class="tab-content" id="tab-entry">
+    <div class="entry-grid" id="entry-grid"></div>
+  </div>
+
+  <!-- ══ ALERTS TAB ══ -->
+  <div class="tab-content" id="tab-alerts">
+    <div class="alert-list" id="alert-list"></div>
+  </div>
+
+</div><!-- end main -->
+</div><!-- end layout -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// CONSTANTS & DATA
+// ═══════════════════════════════════════════════════════════
+const LV_COLORS = {1:'#c0392b',2:'#e74c3c',3:'#e8a800',4:'#95c97a',5:'#1a6b3a',null:'#c8cdd8'};
+const LV_NAMES  = {1:'แดงเข้ม (วิกฤต)',2:'แดงอ่อน (ต้องปรับปรุง)',3:'เหลือง (ปานกลาง)',4:'เขียวอ่อน (ดี)',5:'เขียวเข้ม (ดีเลิศ)'};
+
+const INDICATORS = {
+  '1.1.1':{ label:'เบิกจ่ายภาพรวม',       unit:'ร้อยละ',      weight:3,  group:'h1', owner:['รอง. อทร.(กง)', 'ผช. อทร.(กง)', 'อฝง.'],       units:['กทท'],
+    thresholds:[85,87.5,90,92.5,95], q1:49.78, q2:49.78, q3:null, q4:null, forecast:95,
+    note:'Q1/Q2 วัด ณ ครึ่งปี (~50%) ปกติ — Q3-Q4 ยังไม่มีข้อมูล ผลสิ้นปีจะสะท้อนจริงใน Q4', parent:'1.1' },
+  '1.1.2':{ label:'เบิกจ่ายตามแผน',        unit:'ร้อยละ',      weight:7,  group:'h1', owner:['รอง. อทร.(กง)', 'ผช. อทร.(กง)', 'อฝง.'],       units:['กทท'],
+    thresholds:[85,87.5,90,92.5,95], q1:50.00, q2:50.00, q3:null, q4:null, forecast:95,
+    note:'Q1/Q2 วัด ณ ครึ่งปี (~50%) ปกติ — รอผลจริง Q3-Q4 สิ้นปีงบประมาณ', parent:'1.1' },
+  '1.2': { label:'เบิกจ่ายฝึกอบรม',        unit:'ร้อยละ',      weight:2,  group:'h1', owner:['อฝง.', 'อฝบ.', 'กพบ.'],       units:['กทท'],
+    thresholds:[40,45,50,55,60],     q1:41.74, q2:56.08, q3:null, q4:null, forecast:60,
+    note:'Q2 ผ่านเกณฑ์ระดับ 4 (56.08%) อยู่ในทิศทางที่ดี', parent:null },
+  '1.3': { label:'Eco-Efficiency',          unit:'ระดับ',       weight:1,  group:'h1', owner:['รอง อทร.(กง)', 'อฝก.'],                 units:['กทท'],
+    thresholds:[1,2,3,4,5],          q1:1,     q2:1,     q3:null, q4:null, forecast:3,
+    note:'อยู่ระหว่างทบทวนและจัดทำแผนงาน — คณะกรรมการฝ่ายบริหารเห็นชอบ 13 ก.พ. 69', parent:null },
+  '1.4': { label:'ก๊าซเรือนกระจก',         unit:'Ton CO2eq.',  weight:2,  group:'h1', owner:['รอง อทร.(กง)', 'อฝก.'],                units:['กทท'],
+    thresholds:[6012749,6012699,6012649,6012599,6012549], higherIsBetter:false,
+    q1:1616470, q2:3060625, q3:null, q4:null, forecast:6012549,
+    note:'Q2 สะสม 3.06 ล้าน Ton CO2eq. — ยังอยู่ในกรอบงบประมาณปี', parent:null },
+  '2.1.1':{ label:'กำไรสุทธิ กทท.',        unit:'ล้านบาท',     weight:5,  group:'h2', owner:['อ.ทกท.', 'อ.ทลฉ.', 'รอง อ.ทลฉ.', 'รอง อ.ทกท.', 'ผช.อ.ทลฉ.', 'รอง อทร.(กง)', 'ผช. อทร.(กง)', 'อฝง.'],        units:['กทท'],
+    thresholds:[6490,6890,7290,7345,7400], q1:1791.61, q2:3544.97, q3:null, q4:null, forecast:7400,
+    note:'Q2 สะสม 3,544.97 MB (~48.6% ของเป้า L3=7,290 MB) — ปกติสำหรับครึ่งปี', parent:'2.1' },
+  '2.1.2':{ label:'กำไรสุทธิ ทกท.',        unit:'ล้านบาท',     weight:4,  group:'h2', owner:['อ.ทกท.', 'รอง อ.ทกท.', 'รอง อทร.(กง)', 'ผช. อทร.(กง)', 'อฝง.'],       units:['ทกท'],
+    thresholds:[1208,1270,1332,1336,1340], q1:346.23, q2:670.14, q3:null, q4:null, forecast:1340,
+    note:'Q2 สะสม 670.14 MB (~50.3% ของเป้า L3=1,332 MB) — ปกติสำหรับครึ่งปี', parent:'2.1' },
+  '2.1.3':{ label:'กำไรสุทธิ ทลฉ.',        unit:'ล้านบาท',     weight:3,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'รอง อทร.(กง)', 'ผช. อทร.(กง)', 'อฝง.'],           units:['ทลฉ'],
+    thresholds:[6707,7007,7307,7387,7467], q1:1817.75, q2:3641.87, q3:null, q4:null, forecast:7467,
+    note:'Q2 สะสม 3,641.87 MB (~49.8% ของเป้า L3) — ปัจจัยเสี่ยง: ช่องแคบ Hormuz', parent:'2.1' },
+  '2.2': { label:'รายได้ ทรน.',             unit:'ล้านบาท',     weight:3,  group:'h2', owner:['รอง อทร.(บธ)', 'ผช. อทร.(บธ)', 'อสทภ.', 'รอง อทร.(กง)', 'ผช. อทร.(กง)', 'อฝง.'],units:['ทรน'],
+    thresholds:[30,35,40,41,42],     q1:9.38, q2:28.00, q3:null, q4:null, forecast:42,
+    note:'Q2 สะสม 28 MB เทียบเป้า L3=40 MB — ปัจจัยบวก: ผู้ประกอบการสนใจใช้บริการมากขึ้น', parent:null },
+  '2.3': { label:'ตู้สินค้า SRTO+C',        unit:'TEU',         weight:4,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อสปก.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[480000,490000,500000,510000,520000], q1:151377, q2:280601, q3:null, q4:null, forecast:560000,
+    note:'Q2 สะสม 280,601 TEU — ตู้ SRTO 233,587 + ลาน C 47,014', parent:null },
+  '2.4': { label:'ตู้สินค้า ทลฉ.',          unit:'ล้าน TEU',    weight:4,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อสปก.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[9.05,9.30,9.55,9.78,10.00], q1:2.727, q2:5.44, q3:null, q4:null, forecast:10.46,
+    note:'Q2 สะสม 5.44M TEU — ปัจจัยเสี่ยง: ปิดช่องแคบ Hormuz กระทบปริมาณเรือ ทลฉ.', parent:null },
+  '2.5.1':{ label:'ประสิทธิภาพ ทกท.',       unit:'ระดับ',       weight:3,  group:'h2', owner:['อ.ทกท.', 'รอง อ.ทกท.', 'อฝส.', 'อฝบส.'],                       units:['ทกท'],
+    thresholds:[1,2,3,4,5],          q1:1, q2:1, q3:null, q4:null, forecast:5,
+    note:'Q1-Q2: ตามเป้าหมาย 2 ด้าน (Crane+รับส่ง) = Level 1', parent:'2.5' },
+  '2.5.2':{ label:'ประสิทธิภาพ ทลฉ.',       unit:'ระดับ',       weight:2,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อสปก.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[1,2,3,4,5],          q1:1, q2:1, q3:null, q4:null, forecast:3,
+    note:'Q1-Q2: ตามเป้าหมาย 1 ด้าน = Level 1', parent:'2.5' },
+  '2.6': { label:'บริหารสินทรัพย์',         unit:'ล้านบาท',     weight:4,  group:'h2', owner:['รอง อทร.(บธ)', 'ผช. อทร.(บธ)', 'อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อฝพต.'],      units:['กทท','ทลฉ'],
+    thresholds:[1700,1800,1900,1950,2000], q1:411.80, q2:638.99, q3:null, q4:null, forecast:2000,
+    note:'Q2 สะสม 638.99 MB เทียบเป้า L3=1,900 MB — ต้องเร่งรัดการจัดเก็บรายได้สินทรัพย์', parent:null },
+  '2.7.1':{ label:'ทลฉ.ระยะ3 ส่วน1',        unit:'ระดับ',       weight:2,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[1,2,3,4,5],          q1:1, q2:1, q3:null, q4:null, forecast:3,
+    note:'Q2: 44.93% ของแผน — อยู่ระหว่างดำเนินการ', parent:'2.7' },
+  '2.7.2':{ label:'ทลฉ.ระยะ3 ส่วน2-4',      unit:'ระดับ',       weight:2,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[1,2,3,4,5],          q1:1, q2:1, q3:null, q4:null, forecast:3,
+    note:'Q2: 13.6% ของแผน — ยังอยู่ในระยะต้นของโครงการ', parent:'2.7' },
+  '2.7.3':{ label:'บริการปั้นจั่น',          unit:'ระดับ',       weight:2,  group:'h2', owner:['รอง อทร.(บธ)', 'ผช. อทร.(บธ)', 'อสทภ.'],               units:['ทรน','กทท'],
+    thresholds:[1,2,3,4,5],          q1:1, q2:1, q3:null, q4:null, forecast:3,
+    note:'Q2: 27% (ทรน.+ทชส.) — ประกาศแผนจัดซื้อ+ร่าง TOR เรียบร้อยแล้ว', parent:'2.7' },
+  '2.7.4':{ label:'Green Port EV',           unit:'ระดับ',       weight:2,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[1,2,3,4,5],          q1:1, q2:1, q3:null, q4:null, forecast:4,
+    note:'Q2: อยู่ระหว่างดำเนินการติดตั้งสถานีชาร์จ EV ตามแผน', parent:'2.7' },
+  '2.8.1':{ label:'สัญญา B1-B2',            unit:'ระดับ',       weight:2,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[1,2,3,4,5],          q1:1, q2:4, q3:null, q4:null, forecast:4,
+    note:'Q2: รวค.เห็นชอบรายงานการศึกษาฯ แล้ว (80%) = Level 4 — คืบหน้าชัดเจน', parent:'2.8' },
+  '2.8.2':{ label:'สัญญา B3-B5',            unit:'ระดับ',       weight:2,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[1,2,3,4,5],          q1:1, q2:4, q3:null, q4:null, forecast:4,
+    note:'Q2: กทท.มีหนังสือเสนอ คค. เรื่องต่อสัญญา (80%) = Level 4', parent:'2.8' },
+  '2.8.3':{ label:'สัญญา A5',               unit:'ระดับ',       weight:1,  group:'h2', owner:['อ.ทลฉ.', 'รอง อ.ทลฉ.', 'ผช.อ.ทลฉ.', 'อกผง.'],           units:['ทลฉ'],
+    thresholds:[1,2,3,4,5],          q1:5, q2:5, q3:null, q4:null, forecast:5,
+    note:'Q1-Q2: ดีกว่าเป้าหมาย Level 5 — ส่งหนังสือถึง สคร. ก่อนสิ้นปีงบประมาณ', parent:'2.8' },
+};
+
+// Heatmap column groups
+const HM_COLS = [
+  { id:'1.1',   label:'1.1',      children:['1.1.1','1.1.2'] },
+  { id:'1.2',   label:'1.2',      children:['1.2'] },
+  { id:'1.34',  label:'1.3/1.4',  children:['1.3','1.4'] },
+  { id:'2.1',   label:'2.1',      children:['2.1.1','2.1.2','2.1.3'] },
+  { id:'2.2',   label:'2.2',      children:['2.2'] },
+  { id:'2.34',  label:'2.3/2.4',  children:['2.3','2.4'] },
+  { id:'2.5',   label:'2.5',      children:['2.5.1','2.5.2'] },
+  { id:'2.6',   label:'2.6',      children:['2.6'] },
+  { id:'2.7',   label:'2.7',      children:['2.7.1','2.7.2','2.7.3','2.7.4'] },
+  { id:'2.8',   label:'2.8',      children:['2.8.1','2.8.2','2.8.3'] },
+];
+const HM_ROWS = ['คาดการณ์','Q4','Q3','Q2','Q1'];
+const HM_ROW_FIELD = { 'คาดการณ์':'forecast', 'Q4':'q4', 'Q3':'q3', 'Q2':'q2', 'Q1':'q1' };
+
+// ═══════════════════════════════════════════════════════════
+// SCORING
+// ═══════════════════════════════════════════════════════════
+function getLevel(key, val) {
+  if (val === null || val === undefined) return null;
+  const ind = INDICATORS[key];
+  if (!ind) return null;
+  const t = ind.thresholds;
+  const hib = ind.higherIsBetter !== false;
+  if (hib) {
+    if (val >= t[4]) return 5;
+    if (val >= t[3]) return 4;
+    if (val >= t[2]) return 3;
+    if (val >= t[1]) return 2;
+    return 1;
+  } else {
+    if (val <= t[4]) return 5;
+    if (val <= t[3]) return 4;
+    if (val <= t[2]) return 3;
+    if (val <= t[1]) return 2;
+    return 1;
+  }
+}
+function lvColor(lvl) { return LV_COLORS[lvl] || LV_COLORS[null]; }
+
+function getStatus(lvl, period) {
+  if (period === 'คาดการณ์') return { label:'คาดการณ์', color:'#5a6a8a' };
+  if (period === 'Q3' || period === 'Q4') return { label:'ยังไม่มีข้อมูล', color:'#9aa0ad' };
+  if (lvl === null) return { label:'ยังไม่มีข้อมูล', color:'#9aa0ad' };
+  if (lvl >= 4) return { label:'✅ ตามแผน / ดี', color:'#1a6b3a' };
+  if (lvl === 3) return { label:'🟡 ตามแผน', color:'#b07a00' };
+  if (lvl === 2) return { label:'⚠️ เฝ้าระวัง', color:'#b33a2a' };
+  return { label:'🔴 ล่าช้า / วิกฤต', color:'#8b1a10' };
+}
+
+// ═══════════════════════════════════════════════════════════
+// DATA STORAGE
+// ═══════════════════════════════════════════════════════════
+function getData() {
+  let stored = {};
+  try { const s = localStorage.getItem('pat_kpi_2569'); if (s) stored = JSON.parse(s); } catch(e) {}
+  const out = {};
+  for (const key of Object.keys(INDICATORS)) {
+    out[key] = {
+      q1: stored[key]?.q1 ?? INDICATORS[key].q1,
+      q2: stored[key]?.q2 ?? INDICATORS[key].q2,
+      q3: stored[key]?.q3 ?? INDICATORS[key].q3,
+      q4: stored[key]?.q4 ?? INDICATORS[key].q4,
+      forecast: stored[key]?.forecast ?? INDICATORS[key].forecast,
+      note: stored[key]?.note ?? INDICATORS[key].note,
+    };
+  }
+  return out;
+}
+function saveData(d) { try { localStorage.setItem('pat_kpi_2569', JSON.stringify(d)); } catch(e) {} }
+
+// ═══════════════════════════════════════════════════════════
+// BUILD BREAKDOWN
+// ═══════════════════════════════════════════════════════════
+function buildBreakdown() {
+  const data = getData();
+  const counts = {5:0,4:0,3:0,2:0,1:0};
+  for (const key of Object.keys(INDICATORS)) {
+    const lvl = getLevel(key, data[key].q2);
+    if (lvl) counts[lvl]++;
+  }
+  const el = document.getElementById('breakdown-list');
+  let html = '';
+  for (const lv of [5,4,3,2,1]) {
+    html += '<div class="breakdown-row">' +
+      '<div class="bk-swatch" style="background:' + lvColor(lv) + '"></div>' +
+      '<div><div class="bk-count" style="color:' + lvColor(lv) + '">' + counts[lv] + ' ตัวชี้วัด</div>' +
+      '<div class="bk-label">' + LV_NAMES[lv] + '</div></div>' +
+      '</div>';
+  }
+  el.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD HEATMAP
+// ═══════════════════════════════════════════════════════════
+function buildHeatmap() {
+  const data = getData();
+  const container = document.getElementById('heatmap-container');
+  // Single source of truth for sizing — must match CSS .hm-cell width
+  const CW = 32;   // cell width px
+  const CG = 2;    // cell gap px
+  const LW = 72;   // row-label column width px
+
+  function grpPx(n) { return n * CW + (n - 1) * CG; } // total width of a group
+
+  let html = '<div style="min-width:580px;overflow-x:auto">';
+
+  // ── GROUP LABEL ROW ───────────────────────────────────────────────────────
+  html += '<div style="display:flex;align-items:flex-end;margin-bottom:1px;">';
+  html += '<div style="width:' + LW + 'px;flex-shrink:0"></div>'; // spacer for row labels
+  for (const grp of HM_COLS) {
+    const n = grp.children.length;
+    const w = grpPx(n);
+    html += '<div style="width:' + w + 'px;text-align:center;font-size:9px;font-weight:700;color:var(--text3);border-bottom:2px solid var(--border);padding-bottom:2px;margin-right:' + CG + 'px;flex-shrink:0">' + grp.label + '</div>';
+  }
+  html += '</div>';
+
+  // ── SUB-INDICATOR LABEL ROW ───────────────────────────────────────────────
+  html += '<div style="display:flex;align-items:flex-end;margin-bottom:4px;">';
+  html += '<div style="width:' + LW + 'px;flex-shrink:0"></div>';
+  for (const grp of HM_COLS) {
+    for (let ci = 0; ci < grp.children.length; ci++) {
+      const child = grp.children[ci];
+      const isLast = (ci === grp.children.length - 1);
+      const marginRight = isLast ? CG : CG;
+      html += '<div style="width:' + CW + 'px;margin-right:' + marginRight + 'px;flex-shrink:0;font-size:8px;color:var(--text3);text-align:center;overflow:hidden;white-space:nowrap" title="' + child + '">' + child + '</div>';
+    }
+  }
+  html += '</div>';
+
+  // ── DATA ROWS ─────────────────────────────────────────────────────────────
+  for (const rowLabel of HM_ROWS) {
+    const field = HM_ROW_FIELD[rowLabel];
+    const isFuture = (rowLabel === 'Q3' || rowLabel === 'Q4');
+    const rowOp = isFuture ? 'opacity:0.55' : '';
+    const labelStyle = rowLabel === 'คาดการณ์'
+      ? 'color:var(--accent2);font-weight:700'
+      : isFuture
+        ? 'color:var(--text3);font-style:italic'
+        : 'color:var(--text3);font-weight:600';
+
+    html += '<div style="display:flex;align-items:center;margin-bottom:' + CG + 'px;' + rowOp + '">';
+    html += '<div style="width:' + LW + 'px;flex-shrink:0;text-align:right;padding-right:8px;font-size:10px;' + labelStyle + '">' + rowLabel + '</div>';
+
+    for (const grp of HM_COLS) {
+      for (let ci = 0; ci < grp.children.length; ci++) {
+        const child = grp.children[ci];
+        const isLast = (ci === grp.children.length - 1);
+        const val = data[child]?.[field];
+        const lvl = isFuture ? null : getLevel(child, val);
+        const color = lvColor(isFuture ? null : lvl);
+        const isParent = grp.children.length === 1;
+        const opacity = isParent ? '1' : '0.8';
+        const valStr = (val !== null && val !== undefined) ? String(val) : '';
+        const lvlStr = (lvl === null) ? 'null' : String(lvl);
+        html += '<div class="hm-cell" id="hmc-' + child + '-' + rowLabel + '" ' +
+          'style="width:' + CW + 'px;background:' + color + ';opacity:' + opacity + ';margin-right:' + CG + 'px;flex-shrink:0;" ' +
+          'onclick="openPopup(event,\'' + child + '\',\'' + rowLabel + '\',' + lvlStr + ',\'' + valStr + '\')"></div>';
+      }
+    }
+    html += '</div>';
+  }
+
+  html += '</div>';
+  container.innerHTML = html;
+  applyFilter();
+}
+
+// ═══════════════════════════════════════════════════════════
+// FILTER
+// ═══════════════════════════════════════════════════════════
+function applyFilter() {
+  const person = document.getElementById('filterPerson').value;
+  const unit   = document.getElementById('filterUnit').value;
+  const allKeys = Object.keys(INDICATORS);
+
+  // determine which keys are visible
+  const visible = new Set();
+  for (const key of allKeys) {
+    const ind = INDICATORS[key];
+    let show = true;
+    if (person !== 'all' && !ind.owner.includes(person)) show = false;
+    if (unit !== 'all' && !ind.units.includes(unit)) show = false;
+    if (show) visible.add(key);
+  }
+  const filtering = (person !== 'all' || unit !== 'all');
+
+  for (const key of allKeys) {
+    for (const row of HM_ROWS) {
+      const cell = document.getElementById('hmc-' + key + '-' + row);
+      if (!cell) continue;
+      if (!filtering) {
+        cell.classList.remove('dimmed','highlighted');
+      } else if (visible.has(key)) {
+        cell.classList.remove('dimmed');
+        cell.classList.add('highlighted');
+      } else {
+        cell.classList.add('dimmed');
+        cell.classList.remove('highlighted');
+      }
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// POPUP
+// ═══════════════════════════════════════════════════════════
+function openPopup(e, key, period, lvl, rawVal) {
+  e.stopPropagation();
+  const ind = INDICATORS[key];
+  const data = getData();
+
+  // Always show Q2 as the primary result value in popup
+  const q2Val  = data[key]?.q2;
+  const fcVal  = data[key]?.forecast;
+  const lvlQ2  = getLevel(key, q2Val);
+  const lvlFc  = getLevel(key, fcVal);
+
+  // Period badge shows which cell was clicked
+  const periodBadge = document.getElementById('pp-period-badge');
+  periodBadge.textContent = period;
+  const pbColors = {'Q1':'#1e5799','Q2':'#1a6b3a','Q3':'#888','Q4':'#888','คาดการณ์':'#7d3c98'};
+  periodBadge.style.background = pbColors[period] || '#888';
+
+  document.getElementById('pp-code').textContent = key;
+  document.getElementById('pp-name').textContent = ind.label + ' (' + ind.unit + ') · น้ำหนัก ' + ind.weight + '%';
+
+  // Primary display = Q2 result
+  const dispQ2 = q2Val !== null && q2Val !== undefined
+    ? (q2Val > 9999 ? Math.round(q2Val).toLocaleString('th') : q2Val)
+    : '–';
+  document.getElementById('pp-val').textContent = dispQ2;
+  document.getElementById('pp-val').style.color = lvColor(lvlQ2);
+  document.getElementById('pp-unit').textContent = ind.unit;
+
+  // Status badge = Q2 status
+  const status = getStatus(lvlQ2, 'Q2');
+  const sb = document.getElementById('pp-status-badge');
+  sb.textContent = status.label + ' (Q2)';
+  sb.style.background = status.color;
+
+  // Thresholds: Q2 chip = solid full, Forecast chip = outline, others = dim
+  const thrRow = document.getElementById('pp-thr-row');
+  let thrHtml = '';
+  for (let i = 0; i < 5; i++) {
+    const chipLv  = i + 1;
+    const isQ2    = (lvlQ2 === chipLv);
+    const isFc    = (lvlFc === chipLv && !isQ2);
+    const baseColor = lvColor(chipLv);
+    let chipStyle = 'background:' + baseColor + ';';
+    let chipExtra = '';
+    let label2 = '';
+    if (isQ2) {
+      chipStyle += 'opacity:1;box-shadow:0 0 0 3px ' + baseColor + ',0 0 0 5px #1a2335;';
+      label2 = '<br><span style="font-size:8px;opacity:0.9">◀ Q2</span>';
+    } else if (isFc) {
+      chipStyle += 'opacity:1;box-shadow:0 0 0 3px ' + baseColor + ',0 0 0 5px #7d3c98;';
+      label2 = '<br><span style="font-size:8px;opacity:0.9">▶ คาด</span>';
+    } else {
+      chipStyle += 'opacity:0.28;';
+    }
+    thrHtml += '<div class="popup-thr-chip" style="' + chipStyle + '">' +
+      'L' + chipLv + '<br><span style="font-size:9px">' + ind.thresholds[i] + '</span>' + label2 + '</div>';
+  }
+  thrRow.innerHTML = thrHtml;
+
+  // Legend row (use fixed element to avoid duplicates)
+  const legendEl = document.getElementById('pp-thr-legend');
+  if (legendEl) {
+    legendEl.innerHTML =
+      '<span style="display:flex;align-items:center;gap:4px"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#555;box-shadow:0 0 0 2px #555,0 0 0 3px #1a2335"></span>= ผล Q2</span>' +
+      '<span style="display:flex;align-items:center;gap:4px"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#555;box-shadow:0 0 0 2px #555,0 0 0 3px #7d3c98"></span>= คาดการณ์สิ้นปี</span>';
+  }
+
+  document.getElementById('pp-note').textContent = data[key]?.note || ind.note || '';
+
+  // Position popup near click
+  const card = document.getElementById('popupCard');
+  const x = Math.min(e.clientX + 16, window.innerWidth - 370);
+  const y = Math.min(e.clientY + 16, window.innerHeight - 360);
+  card.style.left = x + 'px';
+  card.style.top  = y + 'px';
+
+  document.getElementById('popupOverlay').classList.add('open');
+}
+
+function closePopup(e) {
+  if (e.target === document.getElementById('popupOverlay')) {
+    document.getElementById('popupOverlay').classList.remove('open');
+  }
+}
+function closePopupBtn() { document.getElementById('popupOverlay').classList.remove('open'); }
+
+// ═══════════════════════════════════════════════════════════
+// BUILD ANALYSIS (sidebar items)
+// ═══════════════════════════════════════════════════════════
+const ANALYSIS_ITEMS = [
+  { num:'1', title:'โครงสร้างพื้นฐาน – พัฒนา ทลฉ. ระยะที่ 3 และการรถไฟ', pills:['2.7.1 ทลฉ.ระยะ3 ส่วน1','2.7.2 ทลฉ.ระยะ3 ส่วน2-4','2.5 ประสิทธิภาพมาตรฐานโลก'], lvl:1 },
+  { num:'2', title:'Low-Carbon – Eco-Efficiency และลดก๊าซเรือนกระจก', pills:['1.3 Eco-Efficiency','1.4 ก๊าซเรือนกระจก'], lvl:3 },
+  { num:'3', title:'การบริหารสินทรัพย์ กทท. / ทลฉ.', pills:['2.6 บริหารสินทรัพย์'], lvl:2 },
+  { num:'4', title:'สัญญาผู้ประกอบการ ทลฉ. ระยะที่ 1', pills:['2.8.1 B1-B2 Level 4','2.8.2 B3-B5 Level 4','2.8.3 A5 Level 5 ✅'], lvl:4 },
+  { num:'5', title:'ตัวชี้วัดการเงิน – กำไรสุทธิ ยังครึ่งปี', pills:['2.1.1 กทท. 3,545MB','2.1.2 ทกท. 670MB','2.1.3 ทลฉ. 3,642MB','2.2 ทรน. 28MB'], lvl:2, danger:true },
+];
+
+function buildAnalysis() {
+  let html = '';
+  for (const item of ANALYSIS_ITEMS) {
+    html += '<div class="analysis-item lv' + item.lvl + '">' +
+      '<div class="analysis-item-header">' +
+      '<strong style="font-size:12px;color:var(--accent)">' + item.num + '.</strong>' +
+      '<span class="analysis-text" style="font-weight:600">' + item.title + '</span>' +
+      (item.danger ? '<span style="margin-left:auto;font-size:10px;color:var(--lv1)">⚠ เฝ้าระวัง</span>' : '') +
+      '</div><div class="analysis-pills">';
+    for (const p of item.pills) html += '<span class="analysis-pill">' + p + '</span>';
+    html += '</div></div>';
+  }
+  document.getElementById('analysis-container').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD EXECUTIVE ANALYSIS (bottom)
+// ═══════════════════════════════════════════════════════════
+function buildExecAnalysis() {
+  const data = getData();
+  const allKeys = Object.keys(INDICATORS);
+  const lv5keys = [], lv4keys = [], lv1keys = [], lv2keys = [];
+  for (const key of allKeys) {
+    const lv = getLevel(key, data[key].q2);
+    if (lv === 5) lv5keys.push(key);
+    else if (lv === 4) lv4keys.push(key);
+    else if (lv === 2) lv2keys.push(key);
+    else if (lv === 1) lv1keys.push(key);
+  }
+
+  const good = [...lv5keys,...lv4keys].map(k => '<span class="exec-chip" style="background:' + lvColor(getLevel(k,data[k].q2)) + '">' + k + ' ' + INDICATORS[k].label + '</span>').join('');
+  const bad  = [...lv1keys,...lv2keys].map(k => '<span class="exec-chip" style="background:' + lvColor(getLevel(k,data[k].q2)) + '">' + k + ' ' + INDICATORS[k].label + '</span>').join('');
+
+  const html =
+    '<p class="exec-para">ณ สิ้นไตรมาสที่ 2 ปีบัญชี 2569 (ตุลาคม 2568 – มีนาคม 2569) การท่าเรือแห่งประเทศไทย (กทท.) มีผลการดำเนินงานตามบันทึกข้อตกลงประเมินผล (MOU) รวม <strong>60 ตัวชี้วัด</strong> คะแนนรวม <strong>1.1222 คะแนน</strong> จากคะแนนเต็ม 5.0000 คะแนน โดยเมื่อพิจารณาจากคะแนนมาตรฐาน (ปรับน้ำหนักกลุ่ม) อยู่ที่ <strong>3.5673 คะแนน</strong> ซึ่งคาดการณ์ว่าผลสิ้นปีจะอยู่ที่ <strong>3.8321 คะแนน</strong> ใกล้เคียงเป้าหมาย</p>' +
+
+    '<div class="exec-section-title">✅ ตัวชี้วัดที่มีผลการดำเนินงานดี (Level 4–5)</div>' +
+    '<div class="exec-highlight-row">' + (good || '<span style="color:var(--text3);font-size:12px">ยังไม่มีข้อมูล Q2 ที่ผ่าน Level 4</span>') + '</div>' +
+    '<p class="exec-para">ตัวชี้วัดที่มีผลการดำเนินงานโดดเด่น ได้แก่ <strong>2.8.3 ท่าเทียบเรือ A5</strong> ซึ่งดำเนินการได้เร็วกว่าเป้าหมายที่กำหนด (Level 5) และ <strong>2.8.1–2.8.2 ท่าเทียบเรือ B1-B5</strong> ที่มีความก้าวหน้าชัดเจน (Level 4) รวมถึง <strong>1.2 การเบิกจ่ายค่าใช้จ่ายฝึกอบรม</strong> ที่ผ่านเกณฑ์ระดับ 4 (56.08%)</p>' +
+
+    '<div class="exec-section-title">⚠️ ตัวชี้วัดที่ต้องเฝ้าระวังและเร่งรัด</div>' +
+    '<div class="exec-highlight-row">' + (bad || '<span style="color:var(--text3);font-size:12px">ไม่มีตัวชี้วัดวิกฤต</span>') + '</div>' +
+    '<p class="exec-para">ตัวชี้วัดที่มีผลการดำเนินงานต่ำกว่าเกณฑ์ ส่วนหนึ่งเป็นผลมาจากลักษณะการวัดที่สะสมรายปี เช่น <strong>1.1.1 และ 1.1.2</strong> การเบิกจ่ายงบลงทุน (~50%) ซึ่งเป็นค่าปกติ ณ ครึ่งปีแรก เนื่องจาก Q3–Q4 ยังไม่มีข้อมูล สำหรับตัวชี้วัดทางการเงิน <strong>2.1 กำไรสุทธิ</strong> ของทุกหน่วยงานยังอยู่ที่ระดับ Level 1 เนื่องจากเปรียบเทียบกับเป้าทั้งปี ซึ่งเป็นภาวะปกติสำหรับครึ่งปีแรก โดยคาดการณ์ว่าผลสิ้นปีจะอยู่ในระดับที่ดีขึ้น</p>' +
+
+    '<div class="exec-risk-note">⚠️ <strong>ปัจจัยเสี่ยงที่ต้องติดตามใกล้ชิด:</strong> สถานการณ์การปิดช่องแคบ Hormuz ส่งผลกระทบต่อปริมาณเรือและตู้สินค้าผ่าน ทลฉ. โดยตรง ซึ่งอาจทำให้ตัวชี้วัด 2.4 (ตู้สินค้าผ่าน ทลฉ.) และ 2.1.3 (กำไรสุทธิ ทลฉ.) ไม่บรรลุเป้าหมายสิ้นปีได้ นอกจากนี้ ราคาน้ำมันที่ปรับตัวสูงขึ้นกระทบต้นทุนการดำเนินงานของ กทท. และ ทกท. ฝ่ายบริหารควรติดตามสถานการณ์อย่างใกล้ชิดและเตรียมมาตรการรองรับ</div>' +
+
+    '<div class="exec-section-title">📌 แนวทางเร่งรัดและข้อเสนอแนะ</div>' +
+    '<p class="exec-para">1. <strong>เร่งรัดการเบิกจ่ายงบลงทุน (1.1.1, 1.1.2)</strong> โดยกำหนดให้ผู้รับผิดชอบทุกฝ่ายรายงานความก้าวหน้ารายเดือน เพื่อให้สามารถเบิกจ่ายได้ตามแผนในช่วง Q3–Q4<br>' +
+    '2. <strong>เร่งรัดรายได้จากการบริหารสินทรัพย์ (2.6)</strong> โดยประสานงาน ทลฉ. เพื่อเพิ่มประสิทธิภาพการจัดเก็บรายได้ค่าเช่าและค่าบริการ<br>' +
+    '3. <strong>ติดตามโครงการพัฒนา ทลฉ. ระยะที่ 3 (2.7.1, 2.7.2)</strong> อย่างใกล้ชิด เพื่อให้ดำเนินการได้ตามแผนที่ตั้งไว้<br>' +
+    '4. <strong>วางแผนรับมือความเสี่ยง</strong> จากสถานการณ์ช่องแคบ Hormuz โดยพิจารณาหาตลาดทดแทนและเส้นทางขนส่งสำรอง</p>';
+
+  document.getElementById('exec-analysis-content').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD RISK MATRIX
+// ═══════════════════════════════════════════════════════════
+const RISK_ITEMS = [
+  { label:'กำไรสุทธิ ทลฉ.',   likelihood:4, impact:5, color:'#c0392b' },
+  { label:'ช่องแคบ Hormuz',   likelihood:5, impact:4, color:'#e74c3c' },
+  { label:'ราคาน้ำมัน',       likelihood:4, impact:3, color:'#e8a800' },
+  { label:'ตู้สินค้า ทลฉ.',   likelihood:3, impact:4, color:'#e74c3c' },
+  { label:'เบิกจ่ายงบลงทุน',  likelihood:2, impact:2, color:'#95c97a' },
+  { label:'สัญญา B1-B2',     likelihood:2, impact:3, color:'#e8a800' },
+];
+function buildRiskMatrix() {
+  const cells = [];
+  for (let r = 5; r >= 1; r--) {
+    for (let c = 1; c <= 5; c++) {
+      const risk = r + c;
+      const bg = risk >= 9 ? '#ffebee' : risk >= 7 ? '#fff8e1' : '#f1f8e9';
+      cells.push({ r, c, bg, items:[] });
+    }
+  }
+  for (const item of RISK_ITEMS) {
+    const idx = (5 - item.likelihood) * 5 + (item.impact - 1);
+    if (cells[idx]) cells[idx].items.push(item);
+  }
+  let html = '';
+  for (const cell of cells) {
+    html += '<div class="r-cell" style="background:' + cell.bg + '">';
+    for (const item of cell.items) {
+      html += '<div class="r-dot" style="background:' + item.color + '" title="' + item.label + '">' + item.label.charAt(0) + '</div>';
+    }
+    html += '</div>';
+  }
+  document.getElementById('risk-matrix-grid').innerHTML = html;
+  let lhtml = '';
+  for (const item of RISK_ITEMS) {
+    lhtml += '<div class="risk-legend-item"><div class="r-ld" style="background:' + item.color + '"></div>' + item.label + '</div>';
+  }
+  document.getElementById('risk-legend').innerHTML = lhtml;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD OVERVIEW TABLE
+// ═══════════════════════════════════════════════════════════
+function buildOverviewTable() {
+  const data = getData();
+  const tbl = document.getElementById('overview-table');
+  let html = '<thead><tr>' +
+    '<th style="min-width:200px;text-align:left">ตัวชี้วัด</th>' +
+    '<th>น้ำหนัก</th><th>L1</th><th>L3</th><th>L5</th>' +
+    '<th>Q1 ผล</th><th>Q1 Lv</th><th>Q2 ผล</th><th>Q2 Lv</th>' +
+    '<th>คะแนน Q2 /5</th><th>คาดการณ์</th></tr></thead><tbody>';
+
+  const sections = [
+    { label:'1. การดำเนินงานตามยุทธศาสตร์ (ร้อยละ 15)', keys:['1.1.1','1.1.2','1.2','1.3','1.4'] },
+    { label:'2. ผลการดำเนินงานของรัฐวิสาหกิจ (ร้อยละ 45)', keys:['2.1.1','2.1.2','2.1.3','2.2','2.3','2.4','2.5.1','2.5.2','2.6','2.7.1','2.7.2','2.7.3','2.7.4','2.8.1','2.8.2','2.8.3'] },
+  ];
+
+  html += '<tr class="section-row"><td colspan="11">ผลการดำเนินงาน (Key Performance Areas) ร้อยละ 60</td></tr>';
+  for (const sec of sections) {
+    html += '<tr class="section-row" style="background:#1e3a5c"><td colspan="11">' + sec.label + '</td></tr>';
+    for (const key of sec.keys) {
+      const ind = INDICATORS[key];
+      const d = data[key];
+      const lv1 = getLevel(key,d.q1), lv2 = getLevel(key,d.q2), lvF = getLevel(key,d.forecast);
+      const score = lv2 ? (lv2 * ind.weight / 60).toFixed(4) : '–';
+      const isChild = !!ind.parent;
+      const fmt = v => v !== null && v !== undefined ? (typeof v === 'number' && v > 9999 ? Math.round(v).toLocaleString('th') : v) : '–';
+      html += '<tr class="' + (isChild ? 'child-row' : 'parent-row') + '">' +
+        '<td>' + (isChild ? '&nbsp;&nbsp;&nbsp;' : '') + key + ' ' + ind.label + '</td>' +
+        '<td style="text-align:center">' + ind.weight + '%</td>' +
+        '<td style="text-align:center;font-size:11px">' + ind.thresholds[0] + '</td>' +
+        '<td style="text-align:center;font-size:11px">' + ind.thresholds[2] + '</td>' +
+        '<td style="text-align:center;font-size:11px">' + ind.thresholds[4] + '</td>' +
+        '<td style="text-align:center">' + fmt(d.q1) + '</td>' +
+        '<td style="text-align:center"><span class="level-chip" style="background:' + lvColor(lv1) + '">' + (lv1||'–') + '</span></td>' +
+        '<td style="text-align:center">' + fmt(d.q2) + '</td>' +
+        '<td style="text-align:center"><span class="level-chip" style="background:' + lvColor(lv2) + '">' + (lv2||'–') + '</span></td>' +
+        '<td style="text-align:right;font-family:monospace;font-size:12px">' + score + '</td>' +
+        '<td style="text-align:center"><span class="level-chip" style="background:' + lvColor(lvF) + '">' + (lvF||'–') + '</span></td>' +
+        '</tr>';
+    }
+  }
+  html += '</tbody>';
+  tbl.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD ENTRY
+// ═══════════════════════════════════════════════════════════
+function buildEntry() {
+  const data = getData();
+  const grid = document.getElementById('entry-grid');
+  let html = '';
+  for (const key of Object.keys(INDICATORS)) {
+    const ind = INDICATORS[key];
+    const d = data[key];
+    const lv2 = getLevel(key, d.q2);
+    html += '<div class="entry-card">' +
+      '<h4>' + key + ' – ' + ind.label + ' (' + ind.unit + ')</h4>' +
+      '<div style="font-size:10px;color:var(--text3);margin-bottom:8px">น้ำหนัก: ' + ind.weight + '% | L1=' + ind.thresholds[0] + ' L3=' + ind.thresholds[2] + ' L5=' + ind.thresholds[4] + '</div>' +
+      '<div class="entry-field"><label>Q1</label><input type="number" value="' + (d.q1 ?? '') + '" onchange="updateEntry(\'' + key + '\',\'q1\',this.value)" step="any"></div>' +
+      '<div class="entry-field"><label>Q2 (สะสม)</label><input type="number" value="' + (d.q2 ?? '') + '" onchange="updateEntry(\'' + key + '\',\'q2\',this.value)" step="any"></div>' +
+      '<div class="entry-field"><label>Q3 (สะสม)</label><input type="number" value="' + (d.q3 ?? '') + '" onchange="updateEntry(\'' + key + '\',\'q3\',this.value)" step="any"></div>' +
+      '<div class="entry-field"><label>Q4 (สะสม / สิ้นปี)</label><input type="number" value="' + (d.q4 ?? '') + '" onchange="updateEntry(\'' + key + '\',\'q4\',this.value)" step="any"></div>' +
+      '<div class="entry-field"><label>คาดการณ์สิ้นปี</label><input type="number" value="' + (d.forecast ?? '') + '" onchange="updateEntry(\'' + key + '\',\'forecast\',this.value)" step="any"></div>' +
+      '<div class="entry-field"><label>หมายเหตุ / สถานะ</label><textarea onchange="updateEntry(\'' + key + '\',\'note\',this.value)">' + (d.note || '') + '</textarea></div>' +
+      '<div class="level-preview" style="background:' + lvColor(lv2) + ';color:#fff">Q2 Level: ' + (lv2||'–') + '</div>' +
+      '</div>';
+  }
+  grid.innerHTML = html;
+}
+
+function updateEntry(key, field, val) {
+  const data = getData();
+  if (!data[key]) data[key] = {};
+  data[key][field] = field === 'note' ? val : (val === '' ? null : parseFloat(val));
+  saveData(data);
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD ALERTS
+// ═══════════════════════════════════════════════════════════
+function buildAlerts() {
+  const data = getData();
+  const items = [];
+  for (const [key, ind] of Object.entries(INDICATORS)) {
+    const lv = getLevel(key, data[key].q2);
+    if (lv !== null && lv < 3) items.push({ key, ind, d:data[key], lv });
+  }
+  items.sort((a,b) => a.lv - b.lv);
+  let html = '';
+  if (!items.length) {
+    html = '<div class="alert-card" style="border-left-color:var(--lv5)"><div class="alert-header"><span class="alert-kpi">✅ ไม่มีตัวชี้วัดที่ต้องเฝ้าระวัง</span></div></div>';
+  } else {
+    for (const item of items) {
+      html += '<div class="alert-card ' + (item.lv===2?'warn':'') + '">' +
+        '<div class="alert-header">' +
+        '<span class="alert-kpi">' + item.key + ' – ' + item.ind.label + '</span>' +
+        '<span class="alert-level" style="background:' + lvColor(item.lv) + '">Level ' + item.lv + '</span>' +
+        '</div>' +
+        '<div class="alert-body">Q2 ผล: <strong>' + (item.d.q2 ?? '–') + '</strong> ' + item.ind.unit + ' | เกณฑ์ L3: <strong>' + item.ind.thresholds[2] + '</strong><br>' +
+        '<span style="color:var(--text3)">' + (item.d.note||'') + '</span></div>' +
+        '<button class="gmail-btn" onclick="draftGmail(\'' + item.key + '\',\'' + item.ind.label + '\',' + item.lv + ')">📧 แจ้งเตือนทาง Gmail</button>' +
+        '</div>';
+    }
+  }
+  document.getElementById('alert-list').innerHTML = html;
+}
+
+function draftGmail(key, label, lv) {
+  const s = encodeURIComponent('[แจ้งเตือน KPI] ' + key + ' ' + label + ' ระดับ ' + lv);
+  const b = encodeURIComponent('เรียน ผู้บริหาร\n\nตัวชี้วัด ' + key + ' ' + label + ' มีผลการดำเนินงาน Q2/2569 อยู่ที่ระดับ ' + lv + ' ซึ่งต่ำกว่าเกณฑ์ (ระดับ 3)\nโปรดพิจารณาดำเนินการแก้ไขและรายงานความคืบหน้า\n\nกองประเมินผลองค์กร\nการท่าเรือแห่งประเทศไทย\nโทรศัพท์ภายใน: 5878\nโทรศัพท์มือถือ: 065-496-5155');
+  window.open('https://mail.google.com/mail/?view=cm&su=' + s + '&body=' + b, '_blank');
+}
+
+// ═══════════════════════════════════════════════════════════
+// TAB SWITCH
+// ═══════════════════════════════════════════════════════════
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  btn.classList.add('active');
+  if (tabId === 'overview') buildOverviewTable();
+  if (tabId === 'entry')    buildEntry();
+  if (tabId === 'alerts')   buildAlerts();
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  buildBreakdown();
+  buildHeatmap();
+  buildAnalysis();
+  buildRiskMatrix();
+  buildExecAnalysis();
+});
+</script>
+</body>
+</html>
