@@ -7,111 +7,112 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap');
   :root {
-    --bg:       #f0f2f5;
-    --bg2:      #e8eaee;
+    --bg:       #f8f7f4;
+    --bg2:      #f1efe9;
     --card:     #ffffff;
-    --border:   #dde1e8;
-    --text:     #1a2335;
-    --text2:    #3d4a5e;
-    --text3:    #7a8499;
-    --accent:   #1a3a5c;
-    --accent2:  #1e5799;
-    --gold:     #c8962a;
-    --lv1:      #c0392b;
-    --lv2:      #e74c3c;
-    --lv3:      #e8a800;
-    --lv4:      #95c97a;
-    --lv5:      #1a6b3a;
-    --lv-none:  #c8cdd8;
-    --shadow:   0 2px 10px rgba(26,35,53,0.08);
-    --radius:   10px;
+    --border:   #e6e3dc;
+    --border2:  #ece9e1;
+    --text:     #1c1f24;
+    --text2:    #5a5f68;
+    --text3:    #9a9da3;
+    --accent:   #1e3a5c;
+    --accent2:  #1e3a5c;
+    --gold:     #b8862f;
+    --lv1:      #e2554f;
+    --lv2:      #ef9483;
+    --lv3:      #e3a82e;
+    --lv4:      #5bc69a;
+    --lv5:      #1f9d6f;
+    --lv-none:  #dcdad3;
+    --risk-hi:  #dc2626;
+    --shadow:   0 1px 3px rgba(28,31,36,0.05);
+    --radius:   6px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Sarabun','IBM Plex Sans Thai',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
+  body{font-family:'Sarabun','IBM Plex Sans Thai',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased}
 
   /* HEADER */
-  .top-header{display:flex;align-items:center;justify-content:space-between;background:var(--accent);color:#fff;padding:0 20px;height:48px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.25)}
+  .top-header{display:flex;align-items:center;justify-content:space-between;background:var(--card);color:var(--text);padding:0 22px;height:52px;position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border)}
   .logo-area{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
-  .logo-icon{width:32px;height:32px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center}
-  .logo-icon span{color:var(--accent);font-weight:800;font-size:10px;line-height:1;text-align:center}
-  .mou-badge{background:var(--gold);color:#fff;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
-  .tabs{display:flex;gap:4px}
-  .tab-btn{background:rgba(255,255,255,0.15);border:none;color:rgba(255,255,255,0.75);padding:6px 16px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;transition:all 0.2s}
-  .tab-btn.active{background:rgba(255,255,255,0.28);color:#fff;font-weight:700}
-  .tab-btn:hover:not(.active){background:rgba(255,255,255,0.2);color:#fff}
-  .date-display{font-size:12px;color:rgba(255,255,255,0.7)}
+  .logo-icon{width:28px;height:28px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .logo-icon span{color:#fff;font-weight:800;font-size:9px;line-height:1;text-align:center}
+  .mou-badge{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:2px 9px;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:0.02em}
+  .tabs{display:flex;gap:22px;height:100%}
+  .tab-btn{background:none;border:none;color:var(--text2);padding:0;height:100%;display:flex;align-items:center;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;border-bottom:2px solid transparent;transition:color 0.15s,border-color 0.15s}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+  .tab-btn:hover:not(.active){color:var(--text)}
+  .date-display{font-size:12px;color:var(--text3)}
 
   /* LAYOUT */
-  .layout{display:flex;height:calc(100vh - 48px);overflow:hidden}
+  .layout{display:flex;height:calc(100vh - 52px);overflow:hidden}
 
   /* SIDEBAR */
-  .sidebar{width:224px;min-width:224px;background:var(--card);border-right:1px solid var(--border);overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:14px}
-  .sidebar-section h4{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px}
-  .period-badge{background:var(--accent);color:#fff;border-radius:8px;padding:8px 10px;font-size:11px;font-weight:600}
-  .period-badge .p-period{font-size:13px;font-weight:800;margin-top:2px}
-  select.filter-sel{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);font-family:inherit;font-size:12px;color:var(--text);cursor:pointer;outline:none;margin-bottom:6px}
-  select.filter-sel:focus{border-color:var(--accent2)}
-  .legend-items{display:flex;flex-direction:column;gap:4px}
-  .legend-item{display:flex;align-items:center;gap:8px;font-size:12px;padding:3px 6px;border-radius:5px}
-  .legend-dot{width:14px;height:14px;border-radius:3px;flex-shrink:0}
-  .kpi-mini-list{display:flex;flex-direction:column;gap:5px}
-  .kpi-mini{background:var(--bg2);border-radius:7px;padding:7px 9px}
-  .kpi-mini-label{font-size:10px;color:var(--text3);font-weight:600}
-  .kpi-mini-vals{display:flex;justify-content:space-between;align-items:baseline;margin-top:2px}
-  .kpi-mini-actual{font-size:15px;font-weight:800}
-  .kpi-mini-target{font-size:10px;color:var(--text3)}
-  .kpi-mini-bar{height:4px;border-radius:2px;background:var(--border);margin-top:4px;overflow:hidden}
+  .sidebar{width:228px;min-width:228px;background:var(--card);border-right:1px solid var(--border);overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:20px}
+  .sidebar-section h4{font-size:10.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px}
+  .period-badge{background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:5px;padding:10px 12px;font-size:11px;font-weight:600}
+  .period-badge .p-period{font-size:14px;font-weight:800;margin-top:3px;color:var(--accent)}
+  select.filter-sel{width:100%;padding:7px 26px 7px 10px;border:1px solid var(--border);border-radius:5px;background-color:var(--card);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239a9da3' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;-webkit-appearance:none;appearance:none;font-family:inherit;font-size:12px;color:var(--text);cursor:pointer;outline:none;margin-bottom:8px}
+  select.filter-sel:focus{border-color:var(--accent)}
+  .legend-items{display:flex;flex-direction:column;gap:7px}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:12px;padding:1px 0}
+  .legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .kpi-mini-list{display:flex;flex-direction:column;gap:8px}
+  .kpi-mini{background:var(--card);border:1px solid var(--border2);border-radius:5px;padding:9px 10px}
+  .kpi-mini-label{font-size:10.5px;color:var(--text3);font-weight:600}
+  .kpi-mini-vals{display:flex;justify-content:space-between;align-items:baseline;margin-top:3px}
+  .kpi-mini-actual{font-size:16px;font-weight:800;font-feature-settings:'tnum'}
+  .kpi-mini-target{font-size:10.5px;color:var(--text3)}
+  .kpi-mini-bar{height:3px;border-radius:2px;background:var(--border2);margin-top:5px;overflow:hidden}
   .kpi-mini-fill{height:100%;border-radius:2px}
 
   /* MAIN */
-  .main{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
-  .tab-content{display:none;flex-direction:column;gap:12px}
+  .main{flex:1;overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:18px}
+  .tab-content{display:none;flex-direction:column;gap:18px}
   .tab-content.active{display:flex}
 
-  /* SCORE CARDS */
-  .score-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-  .score-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden}
-  .score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
-  .score-card.c-total::before{background:var(--accent2)}
-  .score-card.c-std::before{background:var(--lv3)}
-  .score-card.c-tgt::before{background:#888}
-  .score-card.c-h1::before{background:var(--lv4)}
-  .score-card.c-h2::before{background:#9b59b6}
-  .sc-label{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
-  .sc-val{font-size:26px;font-weight:800;margin-top:4px;line-height:1}
-  .sc-sub{font-size:10px;color:var(--text3);margin-top:2px}
-  .sc-bar{height:5px;background:var(--border);border-radius:3px;margin-top:8px;overflow:hidden}
-  .sc-bar-fill{height:100%;border-radius:3px}
-  .c-total .sc-val{color:var(--accent2)}
+  /* SCORE CARDS -- unified strip with internal dividers, primary cell emphasized */
+  .score-cards{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .score-card{background:transparent;border-radius:0;padding:18px 20px;box-shadow:none;border:none;border-right:1px solid var(--border2);position:relative}
+  .score-card:last-child{border-right:none}
+  .score-card::before{display:none}
+  .score-card.c-total{background:#fbfaf7}
+  .sc-label{font-size:11px;color:var(--text2);font-weight:600;letter-spacing:0.01em}
+  .sc-val{font-size:22px;font-weight:800;margin-top:8px;line-height:1;font-feature-settings:'tnum'}
+  .c-total .sc-val{font-size:36px}
+  .sc-sub{font-size:11px;color:var(--text3);margin-top:6px}
+  .sc-bar{height:3px;background:var(--border2);border-radius:2px;margin-top:12px;overflow:hidden}
+  .sc-bar-fill{height:100%;border-radius:2px}
+  .c-total .sc-val{color:var(--accent)}
   .c-std .sc-val{color:var(--lv3)}
-  .c-tgt .sc-val{color:#555}
-  .c-h1 .sc-val{color:#1e8c4a}
+  .c-tgt .sc-val{color:var(--text2)}
+  .c-h1 .sc-val{color:var(--lv5)}
   .c-h2 .sc-val{color:#7d3c98}
 
   /* MID ROW */
-  .mid-row{display:grid;grid-template-columns:170px 1fr;gap:12px}
+  .mid-row{display:grid;grid-template-columns:230px 1fr;gap:18px}
 
   /* BREAKDOWN BOX */
-  .breakdown-box{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid var(--border)}
-  .breakdown-box h3{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:10px}
-  .breakdown-list{display:flex;flex-direction:column;gap:5px}
-  .breakdown-row{display:flex;align-items:center;gap:8px}
-  .bk-swatch{width:22px;height:22px;border-radius:5px;flex-shrink:0}
-  .bk-count{font-size:14px;font-weight:700;line-height:1}
-  .bk-label{display:none}
+  .breakdown-box{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .breakdown-box h3{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:14px}
+  .breakdown-list{display:flex;flex-direction:column}
+  .breakdown-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2)}
+  .breakdown-row:last-child{border-bottom:none}
+  .bk-swatch{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .bk-count{font-size:16px;font-weight:700;line-height:1;font-feature-settings:'tnum'}
+  .bk-label{display:block;font-size:11px;color:var(--text2);margin-top:2px;font-weight:400}
 
   /* HEATMAP */
-  .heatmap-box{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid var(--border);overflow-x:auto}
-  .heatmap-title-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-  .heatmap-title-row h3{font-size:13px;font-weight:700;color:var(--text)}
+  .heatmap-box{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border);overflow-x:auto}
+  .heatmap-title-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .heatmap-title-row h3{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.04em}
   .heatmap-note{font-size:11px;color:var(--text3)}
-  .hm-cell{border-radius:4px;height:22px;width:32px;cursor:pointer;transition:transform 0.12s,box-shadow 0.12s;flex-shrink:0}
-  .hm-cell:hover{transform:scale(1.15);z-index:5;box-shadow:0 2px 10px rgba(0,0,0,0.35)}
+  .hm-cell{border-radius:5px;height:20px;width:30px;cursor:pointer;transition:transform 0.12s,box-shadow 0.12s;flex-shrink:0}
+  .hm-cell:hover{transform:scale(1.08);z-index:5;box-shadow:0 2px 8px rgba(28,31,36,0.25)}
   .hm-cell.dimmed{opacity:0.15;filter:grayscale(80%) brightness(1.1)}
-  .hm-cell.highlighted{outline:2px solid var(--accent2);outline-offset:1px}
-  .hm-legend{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
-  .hm-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3)}
-  .hm-legend-dot{width:12px;height:12px;border-radius:3px}
+  .hm-cell.highlighted{outline:2px solid var(--accent);outline-offset:1px}
+  .hm-legend{display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border2);flex-wrap:wrap}
+  .hm-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2)}
+  .hm-legend-dot{width:9px;height:9px;border-radius:50%}
 
   /* POPUP */
   .popup-overlay{position:fixed;inset:0;z-index:500;display:none}
@@ -136,66 +137,67 @@
   .popup-note{font-size:11px;color:var(--text2);background:var(--bg2);border-radius:8px;padding:8px 10px;line-height:1.5}
 
   /* ANALYSIS BOX */
-  .analysis-box{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border)}
-  .analysis-box h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-  .analysis-items{display:flex;flex-direction:column;gap:6px}
-  .analysis-item{border-radius:8px;padding:8px 12px;border-left:4px solid transparent;background:var(--bg2)}
+  .analysis-box{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .analysis-box h3{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .analysis-items{display:flex;flex-direction:column}
+  .analysis-item{border-radius:0;padding:13px 0 13px 14px;border-left:3px solid transparent;background:transparent;border-bottom:1px solid var(--border2)}
+  .analysis-items .analysis-item:last-child{border-bottom:none}
   .analysis-item.lv5{border-left-color:var(--lv5)}
   .analysis-item.lv4{border-left-color:var(--lv4)}
   .analysis-item.lv3{border-left-color:var(--lv3)}
   .analysis-item.lv2{border-left-color:var(--lv2)}
   .analysis-item.lv1{border-left-color:var(--lv1)}
-  .analysis-item-header{display:flex;align-items:center;gap:8px;margin-bottom:3px}
-  .analysis-text{font-size:12px;color:var(--text2);line-height:1.4}
-  .analysis-pills{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
-  .analysis-pill{font-size:10px;background:var(--accent);color:#fff;padding:1px 7px;border-radius:10px;font-weight:600}
+  .analysis-item-header{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  .analysis-text{font-size:12.5px;color:var(--text2);line-height:1.5}
+  .analysis-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+  .analysis-pill{font-size:10px;background:var(--bg2);color:var(--text2);border:1px solid var(--border2);padding:2px 8px;border-radius:3px;font-weight:600}
 
   /* EXECUTIVE ANALYSIS */
-  .exec-analysis-box{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border)}
-  .exec-analysis-box h3{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px;border-bottom:2px solid var(--border);padding-bottom:8px}
+  .exec-analysis-box{background:var(--card);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .exec-analysis-box h3{font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);padding-bottom:10px}
   .exec-para{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:10px}
   .exec-para strong{color:var(--text)}
-  .exec-section-title{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;margin-top:12px;display:flex;align-items:center;gap:6px}
-  .exec-highlight-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-  .exec-chip{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;color:#fff}
-  .exec-risk-note{background:#fff5f5;border:1px solid #ffd5d5;border-radius:8px;padding:10px 14px;font-size:12px;color:#c0392b;line-height:1.6;margin-top:8px}
+  .exec-section-title{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:8px;margin-top:14px;display:flex;align-items:center;gap:6px}
+  .exec-highlight-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .exec-chip{padding:3px 11px;border-radius:3px;font-size:11px;font-weight:700;color:#fff}
+  .exec-risk-note{background:#fdecea;border:1px solid #f3b4ae;border-left:3px solid #dc2626;border-radius:5px;padding:12px 14px;font-size:12px;color:#b91c1c;line-height:1.6;margin-top:8px}
 
   /* RISK */
-  .risk-box{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid var(--border)}
-  .risk-box h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px}
-  #risk-matrix-grid{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:3px;height:160px}
+  .risk-box{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .risk-box h3{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px}
+  #risk-matrix-grid{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:4px;height:150px;margin-top:6px}
   .r-cell{border-radius:4px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:2px;padding:2px}
-  .r-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.25);transition:transform 0.12s}
-  .r-dot:hover{transform:scale(1.25)}
-  .risk-legend{margin-top:8px;display:flex;flex-direction:column;gap:3px}
-  .risk-legend-item{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text2)}
-  .r-ld{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .r-dot{width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;cursor:pointer;box-shadow:0 1px 3px rgba(28,31,36,0.3);transition:transform 0.12s}
+  .r-dot:hover{transform:scale(1.2)}
+  .risk-legend{margin-top:14px;padding-top:12px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:6px}
+  .risk-legend-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text2)}
+  .r-ld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
   /* OVERVIEW TABLE */
-  .overview-table-wrap{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border);overflow-x:auto}
-  .overview-table-wrap h3{font-size:13px;font-weight:700;margin-bottom:10px}
+  .overview-table-wrap{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border);overflow-x:auto}
+  .overview-table-wrap h3{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:14px}
   table.kpi-table{width:100%;border-collapse:collapse;font-size:12px}
-  table.kpi-table th{background:var(--accent);color:#fff;padding:8px 10px;text-align:center;font-weight:600;font-size:11px}
+  table.kpi-table th{background:var(--accent);color:#fff;padding:9px 10px;text-align:center;font-weight:600;font-size:11px}
   table.kpi-table th:first-child{text-align:left}
-  table.kpi-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+  table.kpi-table td{padding:8px 10px;border-bottom:1px solid var(--border2);vertical-align:middle}
   table.kpi-table tr.parent-row td{background:#eef2f8;font-weight:700;color:var(--accent)}
   table.kpi-table tr.child-row td{background:var(--card)}
   table.kpi-table tr.section-row td{background:#1e3a5c;color:#fff;font-weight:700;font-size:11px}
   table.kpi-table tr:hover:not(.section-row) td{background:var(--bg2)}
-  .level-chip{display:inline-flex;align-items:center;justify-content:center;width:28px;height:22px;border-radius:5px;font-size:11px;font-weight:700;color:#fff}
+  .level-chip{display:inline-flex;align-items:center;justify-content:center;width:28px;height:22px;border-radius:4px;font-size:11px;font-weight:700;color:#fff}
 
   /* ENTRY */
-  .entry-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-  .entry-card{background:var(--card);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .entry-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .entry-card{background:var(--card);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);border:1px solid var(--border)}
   .entry-card h4{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:6px}
   .entry-field{margin-bottom:8px}
   .entry-field label{font-size:11px;color:var(--text3);font-weight:600;display:block;margin-bottom:3px}
-  .entry-field input{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);font-family:inherit;font-size:13px;color:var(--text);outline:none}
-  .entry-field input:focus{border-color:var(--accent2)}
-  .entry-field textarea{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);font-family:inherit;font-size:12px;color:var(--text);outline:none;resize:vertical;min-height:60px}
-  .save-btn{background:var(--accent2);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;width:100%;margin-top:4px}
-  .save-btn:hover{background:var(--accent)}
-  .level-preview{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;margin-top:4px}
+  .entry-field input{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:5px;background:var(--bg);font-family:inherit;font-size:13px;color:var(--text);outline:none}
+  .entry-field input:focus{border-color:var(--accent)}
+  .entry-field textarea{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:5px;background:var(--bg);font-family:inherit;font-size:12px;color:var(--text);outline:none;resize:vertical;min-height:60px}
+  .save-btn{background:var(--accent);color:#fff;border:none;padding:8px 20px;border-radius:5px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;width:100%;margin-top:4px}
+  .save-btn:hover{background:var(--gold)}
+  .level-preview{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:700;margin-top:4px}
 
   /* ENTRY ENHANCEMENTS */
   .entry-warning{background:#fff0f0;border:1px solid #e74c3c;border-left:4px solid #c0392b;border-radius:7px;padding:8px 10px;margin-top:8px;font-size:11px;color:#8b1a10;line-height:1.5}
@@ -245,14 +247,14 @@
   .modal-note{font-size:11px;color:var(--text3);margin-top:8px;line-height:1.5;padding:6px 8px;background:#f8f9fb;border-radius:5px}
 
   /* ALERTS */
-  .alert-list{display:flex;flex-direction:column;gap:8px}
-  .alert-card{background:var(--card);border-radius:var(--radius);padding:12px 16px;box-shadow:var(--shadow);border:1px solid var(--border);border-left:4px solid var(--lv1)}
+  .alert-list{display:flex;flex-direction:column;gap:10px}
+  .alert-card{background:var(--card);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow);border:1px solid var(--border);border-left:3px solid var(--lv1)}
   .alert-card.warn{border-left-color:var(--lv2)}
   .alert-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
   .alert-kpi{font-size:12px;font-weight:700;color:var(--accent)}
-  .alert-level{font-size:11px;font-weight:700;color:#fff;padding:2px 8px;border-radius:10px}
+  .alert-level{font-size:11px;font-weight:700;color:#fff;padding:2px 8px;border-radius:3px}
   .alert-body{font-size:12px;color:var(--text2);line-height:1.5}
-  .gmail-btn{margin-top:8px;background:#ea4335;color:#fff;border:none;padding:5px 14px;border-radius:6px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer}
+  .gmail-btn{margin-top:8px;background:#ea4335;color:#fff;border:none;padding:5px 14px;border-radius:5px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer}
 
   ::-webkit-scrollbar{width:6px;height:6px}
   ::-webkit-scrollbar-track{background:var(--bg)}
@@ -367,33 +369,8 @@
   </div>
 
   <div class="sidebar-section">
-    <h4>ค่าสำคัญ Q2 สะสม</h4>
-    <div class="kpi-mini-list">
-      <div class="kpi-mini">
-        <div class="kpi-mini-label">กำไรสุทธิ กทท.</div>
-        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv3)">3,545</span><span class="kpi-mini-target">/ 7,290 MB</span></div>
-        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:48.6%;background:var(--lv3)"></div></div>
-      </div>
-      <div class="kpi-mini">
-        <div class="kpi-mini-label">กำไรสุทธิ ทกท.</div>
-        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv3)">670</span><span class="kpi-mini-target">/ 1,332 MB</span></div>
-        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:50.3%;background:var(--lv3)"></div></div>
-      </div>
-      <div class="kpi-mini">
-        <div class="kpi-mini-label">รายได้ ทรน.</div>
-        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv2)">28.0</span><span class="kpi-mini-target">/ 40 MB</span></div>
-        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:66.7%;background:var(--lv2)"></div></div>
-      </div>
-      <div class="kpi-mini">
-        <div class="kpi-mini-label">ตู้สินค้า ทลฉ.</div>
-        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv2)">5.44</span><span class="kpi-mini-target">/ 9.55M TEU</span></div>
-        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:57%;background:var(--lv2)"></div></div>
-      </div>
-      <div class="kpi-mini">
-        <div class="kpi-mini-label">บริหารสินทรัพย์</div>
-        <div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:var(--lv2)">639</span><span class="kpi-mini-target">/ 1,900 MB</span></div>
-        <div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:33.6%;background:var(--lv2)"></div></div>
-      </div>
+    <h4 id="sidebar-kpi-label">ค่าสำคัญ Q2 สะสม</h4>
+    <div class="kpi-mini-list" id="sidebar-kpi-list">
     </div>
   </div>
 
@@ -467,7 +444,7 @@
     </div><!-- end mid-row -->
 
     <!-- BOTTOM ROW: ANALYSIS + RISK -->
-    <div style="display:grid;grid-template-columns:1fr 310px;gap:12px">
+    <div style="display:grid;grid-template-columns:1fr 310px;gap:18px">
       <div class="analysis-box">
         <h3>🔍 อธิบายประเด็นตัวชี้วัดหลัก</h3>
         <div class="analysis-items" id="analysis-container"></div>
@@ -548,7 +525,7 @@
 // ═══════════════════════════════════════════════════════════
 // CONSTANTS & DATA
 // ═══════════════════════════════════════════════════════════
-const LV_COLORS = {1:'#c0392b',2:'#e74c3c',3:'#e8a800',4:'#95c97a',5:'#1a6b3a',null:'#c8cdd8'};
+const LV_COLORS = {1:'#e2554f',2:'#ef9483',3:'#e3a82e',4:'#5bc69a',5:'#1f9d6f',null:'#dcdad3'};
 const LV_NAMES  = {1:'แดงเข้ม (วิกฤต)',2:'แดงอ่อน (ต้องปรับปรุง)',3:'เหลือง (ปานกลาง)',4:'เขียวอ่อน (ดี)',5:'เขียวเข้ม (ดีเลิศ)'};
 
 const INDICATORS = {
@@ -703,11 +680,11 @@ function lvColorFloat(floatLv) {
   if (floatLv === null || floatLv === undefined) return LV_COLORS[null];
   // Color stops at 1.0, 2.0, 3.0, 4.0, 5.0
   const stops = [
-    [1.0, [192, 57, 43]],   // L1 #c0392b dark red
-    [2.0, [231, 76, 60]],   // L2 #e74c3c light red
-    [3.0, [232, 168, 0]],   // L3 #e8a800 yellow
-    [4.0, [149, 201, 122]], // L4 #95c97a light green
-    [5.0, [26, 107, 58]]    // L5 #1a6b3a dark green
+    [1.0, [226, 85, 79]],   // L1 #e2554f red
+    [2.0, [239, 148, 131]], // L2 #ef9483 light red
+    [3.0, [227, 168, 46]],  // L3 #e3a82e amber
+    [4.0, [91, 198, 154]],  // L4 #5bc69a light green
+    [5.0, [31, 157, 111]]   // L5 #1f9d6f green
   ];
   const clamped = Math.max(1.0, Math.min(5.0, floatLv));
   // Find surrounding stops
@@ -756,41 +733,103 @@ function getData() {
 }
 function saveData(d) { try { localStorage.setItem('pat_kpi_2569', JSON.stringify(d)); } catch(e) {} }
 
+// ── เงื่อนไขหักคะแนน: ถ้า Q4 สถานะยังไม่ "ดำเนินการแล้ว" ให้หักคะแนนตาม penalty ของตัวชี้วัดนั้น ──
+function getPenalty(key, data) {
+  const info = KPI_INFO[key];
+  if (!info || !info.warning) return 0;
+  const status = data[key]?.['warn_' + key] || 'none';
+  return status === 'done' ? 0 : info.warning.penalty;
+}
+
 // ═══════════════════════════════════════════════════════════
 // BUILD BREAKDOWN
 // ═══════════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════════
-// BUILD SCORE CARDS (dynamic)
+// COMPUTE SCORES — single source of truth, used by score cards + exec narrative
 // ═══════════════════════════════════════════════════════════
-function buildScoreCards() {
-  const data = getData();
-  const period = getLatestPeriodLabel(data);
+function computeScores(data) {
   const allKeys = Object.keys(INDICATORS);
 
-  // Compute total KPI score = sum(latestLv * weight) / 60
+  // คะแนนรวม = sum(latestLv * weight) / 60 — เงื่อนไขหักคะแนนคิดเฉพาะตอนข้อมูลล่าสุดคือ Q4 และยังไม่ได้ติ๊ก "ดำเนินการแล้ว"
   let totalScore = 0, h1Score = 0, h2Score = 0;
   let h1Weight = 0, h2Weight = 0;
   for (const key of allKeys) {
     const ind = INDICATORS[key];
-    const { val } = getLatestQ(data[key]);
-    const lv = getLevel(key, val) || 0;
+    const { val, field } = getLatestQ(data[key]);
+    let lv = getLevel(key, val) || 0;
+    if (field === 'q4') lv = Math.max(0, lv - getPenalty(key, data));
     const contrib = lv * ind.weight;
     totalScore += contrib;
     if (ind.group === 'h1') { h1Score += contrib; h1Weight += ind.weight; }
     else                    { h2Score += contrib; h2Weight += ind.weight; }
   }
-  const total  = (totalScore / 60).toFixed(4);
-  const h1     = h1Weight ? (h1Score / h1Weight).toFixed(4) : '–';
-  const h2     = h2Weight ? (h2Score / h2Weight).toFixed(4) : '–';
 
-  // Forecast score
+  // Forecast score (คาดการณ์เป้าหมาย ไม่หักคะแนนล่วงหน้า — เงื่อนไขหักคะแนนคิดเฉพาะตอนปิดสิ้นปี Q4 จริง)
   let fcScore = 0;
   for (const key of allKeys) {
     const ind = INDICATORS[key];
     const lv = getLevel(key, data[key]?.forecast) || 0;
     fcScore += lv * ind.weight;
   }
-  const fc = (fcScore / 60).toFixed(4);
+
+  return {
+    count: allKeys.length,
+    period: getLatestPeriodLabel(data),
+    total: totalScore / 60,
+    h1: h1Weight ? h1Score / h1Weight : null,
+    h2: h2Weight ? h2Score / h2Weight : null,
+    forecast: fcScore / 60,
+  };
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD SIDEBAR KPI MINI-CARDS (dynamic — เทียบกับเป้า L3 ของแต่ละตัว)
+// ═══════════════════════════════════════════════════════════
+const SIDEBAR_KPIS = [
+  { key:'2.1.1', label:'กำไรสุทธิ กทท.', suffix:'MB',    decimals:0 },
+  { key:'2.1.2', label:'กำไรสุทธิ ทกท.', suffix:'MB',    decimals:0 },
+  { key:'2.2',   label:'รายได้ ทรน.',    suffix:'MB',    decimals:1 },
+  { key:'2.4',   label:'ตู้สินค้า ทลฉ.', suffix:'M TEU', decimals:2 },
+  { key:'2.6',   label:'บริหารสินทรัพย์', suffix:'MB',    decimals:0 },
+];
+function buildSidebarKPIs() {
+  const data = getData();
+  const period = getLatestPeriodLabel(data);
+  const lbl = document.getElementById('sidebar-kpi-label');
+  if (lbl) lbl.textContent = 'ค่าสำคัญ ' + period + ' สะสม';
+
+  const fmt = (v, d) => v.toLocaleString('en-US', { minimumFractionDigits:d, maximumFractionDigits:d });
+  let html = '';
+  for (const sk of SIDEBAR_KPIS) {
+    const ind = INDICATORS[sk.key];
+    const { val } = getLatestQ(data[sk.key]);
+    const target = ind.thresholds[2]; // L3
+    const lv = getLevel(sk.key, val);
+    const color = lvColor(lv);
+    const v = val ?? 0;
+    const pct = target ? Math.max(0, Math.min(100, (v / target) * 100)) : 0;
+    html += '<div class="kpi-mini">' +
+      '<div class="kpi-mini-label">' + sk.label + '</div>' +
+      '<div class="kpi-mini-vals"><span class="kpi-mini-actual" style="color:' + color + '">' + (val !== null && val !== undefined ? fmt(v, sk.decimals) : '–') + '</span>' +
+      '<span class="kpi-mini-target">/ ' + fmt(target, sk.decimals === 2 ? 2 : 0) + sk.suffix + '</span></div>' +
+      '<div class="kpi-mini-bar"><div class="kpi-mini-fill" style="width:' + pct.toFixed(1) + '%;background:' + color + '"></div></div>' +
+      '</div>';
+  }
+  document.getElementById('sidebar-kpi-list').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUILD SCORE CARDS (dynamic)
+// ═══════════════════════════════════════════════════════════
+function buildScoreCards() {
+  const data = getData();
+  const s = computeScores(data);
+  const period = s.period;
+
+  const total = s.total.toFixed(4);
+  const h1    = s.h1 !== null ? s.h1.toFixed(4) : '–';
+  const h2    = s.h2 !== null ? s.h2.toFixed(4) : '–';
+  const fc    = s.forecast.toFixed(4);
 
   // Update DOM
   const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
@@ -868,8 +907,8 @@ function buildHeatmap() {
   const data = getData();
   const container = document.getElementById('heatmap-container');
   // Single source of truth for sizing — must match CSS .hm-cell width
-  const CW = 32;   // cell width px
-  const CG = 2;    // cell gap px
+  const CW = 30;   // cell width px
+  const CG = 4;    // cell gap px
   const LW = 72;   // row-label column width px
 
   function grpPx(n) { return n * CW + (n - 1) * CG; } // total width of a group
@@ -1099,20 +1138,26 @@ function buildAnalysis() {
 function buildExecAnalysis() {
   const data = getData();
   const allKeys = Object.keys(INDICATORS);
+  const s = computeScores(data);
+  const Q_TH = { Q1:'ไตรมาสที่ 1', Q2:'ไตรมาสที่ 2', Q3:'ไตรมาสที่ 3', Q4:'ไตรมาสที่ 4' };
+  const periodTh = Q_TH[s.period] || s.period;
+
   const lv5keys = [], lv4keys = [], lv1keys = [], lv2keys = [];
   for (const key of allKeys) {
-    const lv = getLevel(key, data[key].q2);
+    const { val } = getLatestQ(data[key]);
+    const lv = getLevel(key, val);
     if (lv === 5) lv5keys.push(key);
     else if (lv === 4) lv4keys.push(key);
     else if (lv === 2) lv2keys.push(key);
     else if (lv === 1) lv1keys.push(key);
   }
 
-  const good = [...lv5keys,...lv4keys].map(k => '<span class="exec-chip" style="background:' + lvColor(getLevel(k,data[k].q2)) + '">' + k + ' ' + INDICATORS[k].label + '</span>').join('');
-  const bad  = [...lv1keys,...lv2keys].map(k => '<span class="exec-chip" style="background:' + lvColor(getLevel(k,data[k].q2)) + '">' + k + ' ' + INDICATORS[k].label + '</span>').join('');
+  const chipFor = k => { const { val } = getLatestQ(data[k]); return lvColor(getLevel(k,val)); };
+  const good = [...lv5keys,...lv4keys].map(k => '<span class="exec-chip" style="background:' + chipFor(k) + '">' + k + ' ' + INDICATORS[k].label + '</span>').join('');
+  const bad  = [...lv1keys,...lv2keys].map(k => '<span class="exec-chip" style="background:' + chipFor(k) + '">' + k + ' ' + INDICATORS[k].label + '</span>').join('');
 
   const html =
-    '<p class="exec-para">ณ สิ้นไตรมาสที่ 2 ปีบัญชี 2569 (ตุลาคม 2568 – มีนาคม 2569) การท่าเรือแห่งประเทศไทย (กทท.) มีผลการดำเนินงานตามบันทึกข้อตกลงประเมินผล (MOU) รวม <strong>60 ตัวชี้วัด</strong> คะแนนรวม <strong>1.1222 คะแนน</strong> จากคะแนนเต็ม 5.0000 คะแนน โดยเมื่อพิจารณาจากคะแนนมาตรฐาน (ปรับน้ำหนักกลุ่ม) อยู่ที่ <strong>3.5673 คะแนน</strong> ซึ่งคาดการณ์ว่าผลสิ้นปีจะอยู่ที่ <strong>3.8321 คะแนน</strong> ใกล้เคียงเป้าหมาย</p>' +
+    '<p class="exec-para">ณ สิ้น' + periodTh + ' ปีบัญชี 2569 การท่าเรือแห่งประเทศไทย (กทท.) มีผลการดำเนินงานตามบันทึกข้อตกลงประเมินผล (MOU) รวม <strong>' + s.count + ' ตัวชี้วัด</strong> คะแนนรวม <strong>' + s.total.toFixed(4) + ' คะแนน</strong> จากคะแนนเต็ม 5.0000 คะแนน ซึ่งคาดการณ์ว่าผลสิ้นปีจะอยู่ที่ <strong>' + s.forecast.toFixed(4) + ' คะแนน</strong></p>' +
 
     '<div class="exec-section-title">✅ ตัวชี้วัดที่มีผลการดำเนินงานดี (Level 4–5)</div>' +
     '<div class="exec-highlight-row">' + (good || '<span style="color:var(--text3);font-size:12px">ยังไม่มีข้อมูล Q2 ที่ผ่าน Level 4</span>') + '</div>' +
@@ -1137,19 +1182,20 @@ function buildExecAnalysis() {
 // BUILD RISK MATRIX
 // ═══════════════════════════════════════════════════════════
 const RISK_ITEMS = [
-  { label:'กำไรสุทธิ ทลฉ.',   likelihood:4, impact:5, color:'#c0392b' },
-  { label:'ช่องแคบ Hormuz',   likelihood:5, impact:4, color:'#e74c3c' },
-  { label:'ราคาน้ำมัน',       likelihood:4, impact:3, color:'#e8a800' },
-  { label:'ตู้สินค้า ทลฉ.',   likelihood:3, impact:4, color:'#e74c3c' },
-  { label:'เบิกจ่ายงบลงทุน',  likelihood:2, impact:2, color:'#95c97a' },
-  { label:'สัญญา B1-B2',     likelihood:2, impact:3, color:'#e8a800' },
+  { label:'กำไรสุทธิ ทลฉ.',   likelihood:4, impact:5, color:'#dc2626' },
+  { label:'ช่องแคบ Hormuz',   likelihood:5, impact:4, color:'#dc2626' },
+  { label:'ราคาน้ำมัน',       likelihood:4, impact:3, color:'#d97706' },
+  { label:'ตู้สินค้า ทลฉ.',   likelihood:3, impact:4, color:'#d97706' },
+  { label:'เบิกจ่ายงบลงทุน',  likelihood:2, impact:2, color:'#16a34a' },
+  { label:'สัญญา B1-B2',     likelihood:2, impact:3, color:'#16a34a' },
 ];
 function buildRiskMatrix() {
   const cells = [];
   for (let r = 5; r >= 1; r--) {
     for (let c = 1; c <= 5; c++) {
       const risk = r + c;
-      const bg = risk >= 9 ? '#ffebee' : risk >= 7 ? '#fff8e1' : '#f1f8e9';
+      // High-risk corner reads as genuinely red, not pale pink — graduated down to green
+      const bg = risk >= 8 ? '#f3a39d' : risk === 7 ? '#f7c9a0' : risk === 6 ? '#f6dfa0' : risk >= 4 ? '#eef0c4' : '#d9ecd6';
       cells.push({ r, c, bg, items:[] });
     }
   }
@@ -1214,16 +1260,17 @@ function buildOverviewTable() {
       const lvF = getLevel(key, d.forecast);
       // Latest available quarter for score
       const latestLv = lv4 || lv3 || lv2 || lv1;
-      const score = latestLv ? (latestLv * ind.weight / 60).toFixed(4) : '–';
-      const isChild = !!ind.parent;
-      const fmt = v => (v !== null && v !== undefined)
-        ? (typeof v === 'number' && v > 9999 ? Math.round(v).toLocaleString('th') : v)
-        : '–';
-
       // Highlight latest quarter row
       const latestField = d.q4 !== null && d.q4 !== undefined ? 'q4'
         : d.q3 !== null && d.q3 !== undefined ? 'q3'
         : d.q2 !== null && d.q2 !== undefined ? 'q2' : 'q1';
+      // เงื่อนไขหักคะแนน: คิดเฉพาะตอนข้อมูลล่าสุดคือ Q4 และยังไม่ได้ติ๊ก "ดำเนินการแล้ว" (ระดับที่แสดงใน chip ยังคงเป็นค่าจริง ไม่ถูกหัก — หักเฉพาะคะแนน)
+      const scoreLv = latestLv ? Math.max(0, latestLv - (latestField === 'q4' ? getPenalty(key, data) : 0)) : 0;
+      const score = latestLv ? (scoreLv * ind.weight / 60).toFixed(4) : '–';
+      const isChild = !!ind.parent;
+      const fmt = v => (v !== null && v !== undefined)
+        ? (typeof v === 'number' && v > 9999 ? Math.round(v).toLocaleString('th') : v)
+        : '–';
 
       const chipCell = (lv, field) => {
         const isLatest = (field === latestField);
@@ -1668,6 +1715,7 @@ function update25(key, quarter, metric, val) {
   saveData(data);
   buildEntry();
   buildScoreCards();
+  buildSidebarKPIs();
   buildBreakdown();
   buildHeatmap();
   buildExecAnalysis();
@@ -1683,6 +1731,7 @@ function updateEntry(key, field, val) {
   // ถ้ากรอกตัวเลข → refresh ทุกส่วน แล้ว auto-switch ไปภาพรวม
   if (field !== 'note') {
     buildScoreCards();
+    buildSidebarKPIs();
     buildBreakdown();
     buildHeatmap();
     buildExecAnalysis();
@@ -1819,72 +1868,6 @@ function importData(event) {
   reader.onload = function(e) {
     try {
       const payload = JSON.parse(e.target.result);
-      const data = payload.data || payload; // support both wrapped and raw
-      // Validate: check at least one known key exists
-      const keys = Object.keys(INDICATORS);
-      const validKeys = keys.filter(k => data[k]);
-      if (validKeys.length === 0) {
-        document.getElementById('import-status').textContent = '❌ ไฟล์ไม่ถูกต้อง';
-        document.getElementById('import-status').style.color = 'var(--lv1)';
-        return;
-      }
-      // Merge: only overwrite fields that exist in import
-      const current = getData();
-      for (const key of keys) {
-        if (data[key]) {
-          current[key] = { ...current[key], ...data[key] };
-        }
-      }
-      saveData(current);
-      // Refresh UI
-      buildEntry();
-      buildBreakdown();
-      buildHeatmap();
-      buildExecAnalysis();
-      const status = document.getElementById('import-status');
-      status.textContent = '✅ นำเข้าสำเร็จ ' + validKeys.length + ' ตัวชี้วัด';
-      status.style.color = 'var(--lv5)';
-      setTimeout(() => { status.textContent = ''; }, 4000);
-    } catch(err) {
-      document.getElementById('import-status').textContent = '❌ อ่านไฟล์ไม่ได้';
-      document.getElementById('import-status').style.color = 'var(--lv1)';
-    }
-  };
-  reader.readAsText(file);
-  // Reset input so same file can be re-imported
-  event.target.value = '';
-}
-
-// ═══════════════════════════════════════════════════════════
-// EXPORT / IMPORT
-// ═══════════════════════════════════════════════════════════
-function exportData() {
-  const data = getData();
-  const now = new Date();
-  const dateStr = now.getFullYear() + '-' +
-    String(now.getMonth()+1).padStart(2,'0') + '-' +
-    String(now.getDate()).padStart(2,'0');
-  const payload = {
-    exported: now.toISOString(),
-    version: 'PAT_KPI_MOU2569_v1',
-    data: data
-  };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = 'PAT_KPI_MOU2569_' + dateStr + '.json';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importData(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const payload = JSON.parse(e.target.result);
       const data = payload.data || payload;
       const keys = Object.keys(INDICATORS);
       const validKeys = keys.filter(k => data[k]);
@@ -1901,6 +1884,7 @@ function importData(event) {
       saveData(current);
       buildEntry();
       buildScoreCards();
+      buildSidebarKPIs();
       buildBreakdown();
       buildHeatmap();
       buildExecAnalysis();
@@ -1923,6 +1907,7 @@ function importData(event) {
 // ═══════════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   buildScoreCards();
+  buildSidebarKPIs();
   buildBreakdown();
   buildHeatmap();
   buildAnalysis();
