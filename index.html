@@ -259,6 +259,59 @@
   ::-webkit-scrollbar{width:6px;height:6px}
   ::-webkit-scrollbar-track{background:var(--bg)}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+  /* ── KUNIO REPORT DELIVERY ───────────────────────────── */
+  .runner-wrap{position:fixed;bottom:40px;left:0;z-index:600;pointer-events:none}
+  .sprite-stage{position:relative;width:140px;height:160px}
+  .sprite{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:150px;width:auto}
+  .sprite.run{animation:kunioRunbob 0.22s steps(1) infinite}
+  .sprite.run-flip{animation:kunioRunbobFlip 0.22s steps(1) infinite}
+  @keyframes kunioRunbob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+  @keyframes kunioRunbobFlip{0%,100%{transform:translateX(-50%) scaleX(-1) translateY(0)}50%{transform:translateX(-50%) scaleX(-1) translateY(-6px)}}
+  .kunio-dust{position:absolute;bottom:0;left:14px;width:30px;height:10px;border-radius:50%;background:radial-gradient(ellipse at center, rgba(28,31,36,0.2), transparent 70%);animation:kunioDustfade 0.3s ease-in-out infinite;display:none}
+  @keyframes kunioDustfade{0%{opacity:0.55;transform:scale(1)}100%{opacity:0;transform:scale(1.7) translateX(-16px)}}
+
+  .delivery-card{position:fixed;bottom:208px;right:38px;z-index:601;width:430px;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 16px 50px rgba(28,31,36,0.18);opacity:0;transform:translateY(16px) scale(0.96);pointer-events:none;transition:opacity 0.4s ease,transform 0.4s ease}
+  .delivery-card.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .delivery-card.warn .dc-head{background:#fdf1ef}
+  .delivery-card::after{content:'';position:absolute;bottom:-10px;right:74px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:12px solid var(--card)}
+  .dc-head{display:flex;align-items:center;gap:10px;padding:14px 16px 11px;border-bottom:1px solid var(--border2)}
+  .dc-emoji{font-size:20px}
+  .dc-title{font-size:13.5px;font-weight:800;color:var(--text)}
+  .dc-sub{font-size:10.5px;color:var(--text3);margin-top:1px}
+  .dc-close{margin-left:auto;background:none;border:none;font-size:16px;color:var(--text3);cursor:pointer}
+  .dc-body{padding:14px 16px 16px}
+
+  .kdoc{border:1px solid var(--border);border-radius:6px;background:#fff;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04);margin-bottom:12px}
+  .kdoc-scroll{max-height:230px;overflow-y:auto}
+  .kdoc-header{background:var(--accent);color:#fff;padding:12px 16px}
+  .kdoc-h-top{display:flex;justify-content:space-between;align-items:baseline}
+  .kdoc-h-title{font-size:13px;font-weight:800;letter-spacing:0.01em}
+  .kdoc-h-date{font-size:10px;color:#cdd8e6}
+  .kdoc-h-sub{font-size:10px;color:#a9c0d8;margin-top:2px}
+  .kdoc-section{padding:12px 16px;border-bottom:1px solid var(--border2)}
+  .kdoc-section:last-child{border-bottom:none}
+  .kdoc-label{font-size:9.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px}
+  .kdoc-label-warn{font-size:9.5px;font-weight:700;color:var(--lv1);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px}
+  .kdoc-exec{font-size:11.5px;color:var(--text2);line-height:1.65}
+  .kdoc-exec strong{color:var(--text)}
+  .kdoc-table{width:100%;border-collapse:collapse;font-size:11px}
+  .kdoc-table th{text-align:left;color:var(--text3);font-weight:600;padding:3px 6px 5px 0;border-bottom:1px solid var(--border2);font-size:10px}
+  .kdoc-table td{padding:5px 6px 5px 0;border-bottom:1px solid var(--border2);color:var(--text2)}
+  .kdoc-table tr:last-child td{border-bottom:none}
+  .kdoc-lvl{display:inline-flex;min-width:20px;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:800;color:#fff;justify-content:center}
+  .kdoc-footer{padding:8px 16px;font-size:9px;color:var(--text3);background:var(--bg);text-align:center}
+  .kdoc-link{text-align:center;padding:8px 0 2px}
+  .kdoc-link a{font-size:11px;color:var(--accent);font-weight:700;text-decoration:none;cursor:pointer}
+
+  .dc-field label{font-size:10.5px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px}
+  .dc-field input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:13px;outline:none}
+  .dc-field input:focus{border-color:var(--accent)}
+  .dc-actions{display:flex;gap:8px;margin-top:11px}
+  .btn-send{flex:1;background:var(--accent);color:#fff;border:none;padding:10px;border-radius:6px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
+  .btn-send:hover{background:var(--gold)}
+  .btn-later{background:none;border:1px solid var(--border);color:var(--text2);padding:10px 14px;border-radius:6px;font-family:inherit;font-size:12px;cursor:pointer}
+  .dc-hint{font-size:10px;color:var(--text3);margin-top:7px;text-align:center}
 </style>
 </head>
 <body>
@@ -290,6 +343,73 @@
       </div>
       <div class="popup-note" id="pp-note"></div>
     </div>
+  </div>
+</div>
+
+<!-- KUNIO REPORT DELIVERY -->
+<div class="runner-wrap" id="runnerWrap">
+  <div class="sprite-stage">
+    <div class="kunio-dust" id="kunioDust"></div>
+    <img class="sprite" id="kunioSprite" src="kunio_frames/run1_v2.png">
+  </div>
+</div>
+
+<div class="delivery-card" id="kunioCard">
+  <div class="dc-head">
+    <span class="dc-emoji" id="dcEmoji">📨</span>
+    <div>
+      <div class="dc-title" id="dcTitle">คุนิโอะส่ง Report มาให้แล้ว!</div>
+      <div class="dc-sub" id="dcSub">MOU 2569 · กำลังโหลด…</div>
+    </div>
+    <button class="dc-close" id="dcClose">✕</button>
+  </div>
+  <div class="dc-body">
+
+    <div class="kdoc">
+      <div class="kdoc-scroll">
+        <div class="kdoc-header">
+          <div class="kdoc-h-top">
+            <span class="kdoc-h-title">PAT MOU Performance Report</span>
+            <span class="kdoc-h-date" id="kdocDate"></span>
+          </div>
+          <div class="kdoc-h-sub" id="kdocSub">ปีบัญชี 2569 · จัดทำโดย กองประเมินผลองค์กร</div>
+        </div>
+
+        <div class="kdoc-section">
+          <div class="kdoc-label">Executive Summary</div>
+          <div class="kdoc-exec" id="kdocExec"></div>
+        </div>
+
+        <div class="kdoc-section">
+          <div class="kdoc-label">ตัวชี้วัดเด่น</div>
+          <table class="kdoc-table">
+            <tr><th>ตัวชี้วัด</th><th>ผลล่าสุด</th><th>ระดับ</th></tr>
+            <tbody id="kunioGoodRows"></tbody>
+          </table>
+        </div>
+
+        <div class="kdoc-section">
+          <div class="kdoc-label-warn">ตัวชี้วัดเฝ้าระวัง</div>
+          <table class="kdoc-table">
+            <tr><th>ตัวชี้วัด</th><th>ผลล่าสุด</th><th>ระดับ</th></tr>
+            <tbody id="kunioWatchRows"></tbody>
+          </table>
+        </div>
+
+        <div class="kdoc-footer">เอกสารนี้จัดทำเพื่อการบริหารภายในเท่านั้น · การท่าเรือแห่งประเทศไทย</div>
+      </div>
+    </div>
+    <div class="kdoc-link"><a id="kunioOpenFull">เปิดดูฉบับเต็ม (Executive Summary) →</a></div>
+
+    <div class="dc-field">
+      <label>ถ้าตรวจแล้วพร้อมส่ง ใส่อีเมลผู้รับ แล้วกดส่งได้เลย</label>
+      <input type="email" id="kunioEmail" placeholder="name@pat.or.th">
+    </div>
+    <div class="dc-actions">
+      <button class="btn-send" id="kunioSendBtn">ส่ง Report 🚀</button>
+      <button class="btn-later" id="kunioLaterBtn">ดูทีหลัง</button>
+    </div>
+    <div class="dc-hint">ตรวจทุกตัวเลขแล้วก่อนส่งมาให้ — กดส่งได้เมื่อพร้อมจริงเท่านั้น</div>
   </div>
 </div>
 
@@ -1697,6 +1817,7 @@ function buildEntry() {
 
 // ── Update 2.5 sub-metric ──
 function update25(key, quarter, metric, val) {
+  kunioOnEdit();
   const data = getData();
   if (!data[key]) data[key] = {};
   let metricData = {};
@@ -1723,6 +1844,7 @@ function update25(key, quarter, metric, val) {
 }
 
 function updateEntry(key, field, val) {
+  kunioOnEdit();
   const data = getData();
   if (!data[key]) data[key] = {};
   data[key][field] = field === 'note' ? val : (val === '' ? null : parseFloat(val));
@@ -1901,6 +2023,213 @@ function importData(event) {
   reader.readAsText(file);
   event.target.value = '';
 }
+
+// ═══════════════════════════════════════════════════════════
+// KUNIO REPORT DELIVERY — idle-triggered report-delivery mascot
+// ═══════════════════════════════════════════════════════════
+const KUNIO_IDLE_WAIT_MS = 12000;
+const KUNIO_RUN_IN_MS = 1500;
+const KUNIO_RUN_OUT_MS = 1200;
+const KUNIO_INTERRUPT_HOLD_MS = 1400;
+
+const kunioRunnerWrap = document.getElementById('runnerWrap');
+const kunioSprite = document.getElementById('kunioSprite');
+const kunioDust = document.getElementById('kunioDust');
+const kunioCard = document.getElementById('kunioCard');
+const kunioDcTitle = document.getElementById('dcTitle');
+const kunioDcSub = document.getElementById('dcSub');
+const kunioDcEmoji = document.getElementById('dcEmoji');
+
+const KUNIO_ORIGINAL_TITLE = kunioDcTitle.textContent;
+const KUNIO_ORIGINAL_SUB = kunioDcSub.textContent;
+
+let kunioState = 'waiting'; // waiting | running-in | present | interrupting | running-out
+let kunioLastEditTime = Date.now();
+let kunioPendingInterrupt = false;
+let kunioFrameToggle = 1;
+let kunioFrameInterval = null;
+
+const kunioOffscreenX = () => -220;
+const kunioOnscreenX = () => window.innerWidth - 330;
+const kunioEaseOutCubic = t => 1 - Math.pow(1 - t, 3);
+const kunioEaseInCubic = t => t * t * t;
+
+kunioRunnerWrap.style.transform = `translateX(${kunioOffscreenX()}px)`;
+
+function kunioAnimateX(fromX, toX, duration, easeFn, onDone) {
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const x = fromX + (toX - fromX) * easeFn(t);
+    kunioRunnerWrap.style.transform = `translateX(${x}px)`;
+    if (t < 1) requestAnimationFrame(step);
+    else onDone && onDone();
+  }
+  requestAnimationFrame(step);
+}
+
+function kunioStartFrameToggle() {
+  if (kunioFrameInterval) return;
+  kunioFrameInterval = setInterval(() => {
+    kunioFrameToggle = kunioFrameToggle === 1 ? 2 : 1;
+    kunioSprite.src = `kunio_frames/run${kunioFrameToggle}_v2.png`;
+  }, 110);
+}
+function kunioStopFrameToggle() {
+  clearInterval(kunioFrameInterval);
+  kunioFrameInterval = null;
+}
+
+// Builds the report card content from the same data + scoring helpers the
+// Executive Summary tab uses (computeScores/getLevel/getLatestQ/lvColor),
+// so the numbers Kunio shows always match the real dashboard.
+function buildKunioReport() {
+  const data = getData();
+  const s = computeScores(data);
+  const Q_TH = { Q1:'ไตรมาสที่ 1', Q2:'ไตรมาสที่ 2', Q3:'ไตรมาสที่ 3', Q4:'ไตรมาสที่ 4' };
+  const periodTh = Q_TH[s.period] || s.period;
+
+  kunioDcSub.textContent = 'MOU 2569 · ' + periodTh + ' · อัปเดตล่าสุดเมื่อสักครู่';
+  document.getElementById('kdocSub').textContent = periodTh + ' ปีบัญชี 2569 · จัดทำโดย กองประเมินผลองค์กร';
+  document.getElementById('kdocDate').textContent = new Date().toLocaleDateString('th-TH', { year:'numeric', month:'short', day:'numeric' });
+  document.getElementById('kdocExec').innerHTML =
+    'ผลการดำเนินงานสะสม <strong>' + s.count + ' ตัวชี้วัด</strong> คะแนนรวม <strong>' + s.total.toFixed(4) +
+    '</strong> จากคะแนนเต็ม 5.0000 คาดการณ์สิ้นปีที่ <strong>' + s.forecast.toFixed(4) + '</strong>';
+
+  const allKeys = Object.keys(INDICATORS);
+  const good = [], watch = [];
+  for (const key of allKeys) {
+    const { val } = getLatestQ(data[key]);
+    const lv = getLevel(key, val);
+    if (lv === 5 || lv === 4) good.push({ key, val, lv });
+    else if (lv === 1 || lv === 2) watch.push({ key, val, lv });
+  }
+  good.sort((a, b) => b.lv - a.lv);
+  watch.sort((a, b) => a.lv - b.lv);
+
+  const fmt = v => (v === null || v === undefined) ? '–'
+    : (typeof v === 'number' && v > 9999 ? Math.round(v).toLocaleString('th') : v);
+  const rowsHtml = items => items.slice(0, 3).map(it =>
+    '<tr><td>' + it.key + ' ' + INDICATORS[it.key].label + '</td><td>' + fmt(it.val) + ' ' + INDICATORS[it.key].unit + '</td>' +
+    '<td><span class="kdoc-lvl" style="background:' + lvColor(it.lv) + '">L' + it.lv + '</span></td></tr>'
+  ).join('');
+
+  document.getElementById('kunioGoodRows').innerHTML = rowsHtml(good) ||
+    '<tr><td colspan="3" style="color:var(--text3)">ยังไม่มีตัวชี้วัดที่ผ่าน Level 4 ในงวดล่าสุด</td></tr>';
+  document.getElementById('kunioWatchRows').innerHTML = rowsHtml(watch) ||
+    '<tr><td colspan="3" style="color:var(--text3)">ไม่มีตัวชี้วัดวิกฤต</td></tr>';
+}
+
+function kunioRunIn() {
+  kunioState = 'running-in';
+  kunioDust.style.display = 'block';
+  kunioSprite.classList.remove('run-flip');
+  kunioSprite.classList.add('run');
+  kunioStartFrameToggle();
+  kunioAnimateX(kunioOffscreenX(), kunioOnscreenX(), KUNIO_RUN_IN_MS, kunioEaseOutCubic, () => {
+    kunioStopFrameToggle();
+    kunioSprite.classList.remove('run');
+    kunioSprite.src = 'kunio_frames/crossarm_v2.png';
+    kunioDust.style.display = 'none';
+    kunioState = 'present';
+    if (kunioPendingInterrupt) {
+      kunioPendingInterrupt = false;
+      kunioTriggerInterrupt();
+    } else {
+      kunioShowCard();
+    }
+  });
+}
+
+function kunioShowCard() {
+  buildKunioReport();
+  kunioDcEmoji.textContent = '📨';
+  kunioDcTitle.textContent = KUNIO_ORIGINAL_TITLE;
+  kunioCard.classList.remove('warn');
+  kunioCard.classList.add('show');
+}
+
+function kunioHideCard() {
+  kunioCard.classList.remove('show');
+}
+
+function kunioTriggerInterrupt() {
+  kunioState = 'interrupting';
+  kunioDcEmoji.textContent = '👀';
+  kunioDcTitle.textContent = 'อ๋อ มีกรอกข้อมูลใหม่ เดี๋ยวผมกลับมาครับ';
+  kunioDcSub.textContent = 'รอข้อมูลนิ่งก่อนนะครับ แล้วจะรีบเอา Report มาให้ใหม่';
+  kunioCard.classList.add('show', 'warn');
+  setTimeout(() => {
+    kunioHideCard();
+    kunioRunOut();
+  }, KUNIO_INTERRUPT_HOLD_MS);
+}
+
+function kunioRunOut() {
+  kunioState = 'running-out';
+  kunioDust.style.display = 'block';
+  kunioSprite.classList.add('run-flip');
+  kunioStartFrameToggle();
+  kunioAnimateX(kunioOnscreenX(), kunioOffscreenX(), KUNIO_RUN_OUT_MS, kunioEaseInCubic, () => {
+    kunioStopFrameToggle();
+    kunioSprite.classList.remove('run-flip');
+    kunioSprite.src = 'kunio_frames/run1_v2.png';
+    kunioDust.style.display = 'none';
+    kunioState = 'waiting';
+    kunioLastEditTime = Date.now(); // fresh idle window starts now
+  });
+}
+
+function kunioOnEdit() {
+  kunioLastEditTime = Date.now();
+  if (kunioState === 'present') kunioTriggerInterrupt();
+  else if (kunioState === 'running-in') kunioPendingInterrupt = true;
+  // 'waiting' just resets the timer silently; 'interrupting'/'running-out' are
+  // already heading off — the timestamp reset above still pushes the next wait further out.
+}
+
+function kunioOpenFullReport() {
+  kunioHideCard();
+  kunioRunOut();
+  // same tab-switch sequence updateEntry() uses to land on Executive Summary
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-exec').classList.add('active');
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  if (tabBtns[0]) tabBtns[0].classList.add('active');
+}
+
+function kunioSendReport() {
+  const data = getData();
+  const s = computeScores(data);
+  const email = document.getElementById('kunioEmail').value.trim();
+  const su = encodeURIComponent('PAT MOU Performance Report - ' + getLatestPeriodLabel(data));
+  const b = encodeURIComponent(
+    'เรียน ผู้บริหาร\n\n' +
+    'ผลการดำเนินงานตามบันทึกข้อตกลงประเมินผล (MOU) ' + s.count + ' ตัวชี้วัด คะแนนรวม ' + s.total.toFixed(4) +
+    ' จากคะแนนเต็ม 5.0000 คาดการณ์สิ้นปีที่ ' + s.forecast.toFixed(4) + '\n\n' +
+    'ดูรายงานฉบับเต็มได้ที่ Dashboard MOU 2569 แท็บ Executive Summary\n\n' +
+    'กองประเมินผลองค์กร\nการท่าเรือแห่งประเทศไทย'
+  );
+  const to = email ? '&to=' + encodeURIComponent(email) : '';
+  window.open('https://mail.google.com/mail/?view=cm' + to + '&su=' + su + '&body=' + b, '_blank');
+  kunioSprite.src = 'kunio_frames/victory_v3.png';
+}
+
+function kunioTick() {
+  if (kunioState === 'waiting') {
+    const remain = KUNIO_IDLE_WAIT_MS - (Date.now() - kunioLastEditTime);
+    if (remain <= 0) kunioRunIn();
+  }
+}
+setInterval(kunioTick, 250);
+
+document.getElementById('kunioOpenFull').addEventListener('click', kunioOpenFullReport);
+document.getElementById('kunioSendBtn').addEventListener('click', kunioSendReport);
+document.getElementById('kunioLaterBtn').addEventListener('click', () => { kunioHideCard(); kunioRunOut(); });
+document.getElementById('dcClose').addEventListener('click', () => {
+  if (kunioState === 'present') { kunioHideCard(); kunioRunOut(); }
+});
 
 // ═══════════════════════════════════════════════════════════
 // INIT
